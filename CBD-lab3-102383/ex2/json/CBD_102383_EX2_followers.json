@@ -1,0 +1,38 @@
+[
+  {
+    "id_video": 5,
+    "utilizador": ["teresa"]
+  },
+  {
+    "id_video": 10,
+    "utilizador": ["catarina"]
+  },
+  {
+    "id_video": 11,
+    "utilizador": ["jonny", "teresa"]
+  },
+  {
+    "id_video": 1,
+    "utilizador": ["jonny@ua.pt", "vania"]
+  },
+  {
+    "id_video": 4,
+    "utilizador": ["jonny"]
+  },
+  {
+    "id_video": 6,
+    "utilizador": ["jonny"]
+  },
+  {
+    "id_video": 9,
+    "utilizador": ["admin", "user"]
+  },
+  {
+    "id_video": 12,
+    "utilizador": ["jonny", "teresa", "vania"]
+  },
+  {
+    "id_video": 3,
+    "utilizador": ["admin", "jonny"]
+  }
+]

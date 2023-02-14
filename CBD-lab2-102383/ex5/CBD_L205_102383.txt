@@ -1,0 +1,382 @@
+O dataset foi importado a partir de https://github.com/ozlerhakan/mongodb-json-files
+
+Estrutura do dataset:
+{
+    "id":1,
+    "title":value,
+    "isbn":1234,
+    "pageCount":1234,
+    "publishedDate":date,
+    "thumbnailUrl":url,
+    "shortDescription":description,
+    "longDescription":description,
+    "status":status,
+    "authors":
+        [author1, author2, ...],
+    "categories":
+        [categorie1,, categorie2, ...]
+}
+
+
+
+// Alínea C
+
+//1- Encontrar todos os livros com um nº de páginas igual ou superior a 500
+db.books.find({"pageCount":{$gte:500}},{_id:0, title:1, pageCount:1})
+{
+    "title" : "Android in Action, Second Edition",
+    "pageCount" : NumberInt(592)
+}
+{
+    "title" : "Flex 3 in Action",
+    "pageCount" : NumberInt(576)
+}
+{
+    "title" : "Flex 4 in Action",
+    "pageCount" : NumberInt(600)
+}
+{
+    "title" : "Flexible Rails",
+    "pageCount" : NumberInt(592)
+}
+{
+    "title" : "Brownfield Application Development in .NET",
+    "pageCount" : NumberInt(550)
+}(...)
+
+//2- Livros que têm "FLex" no título
+db.books.find({title:{ $regex : "Flex"}})
+{
+    "_id" : NumberInt(4),
+    "title" : "Flex 3 in Action",
+    "isbn" : "1933988746",
+    "pageCount" : NumberInt(576),
+    "publishedDate" : ISODate("2009-02-02T08:00:00.000+0000"),
+    "thumbnailUrl" : "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/ahmed.jpg",
+    "longDescription" : "New web applications require engaging user-friendly interfaces   and the cooler, the better. With Flex 3, web developers at any skill level can create high-quality, effective, and interactive Rich Internet Applications (RIAs) quickly and easily. Flex removes the complexity barrier from RIA development by offering sophisticated tools and a straightforward programming language so you can focus on what you want to do instead of how to do it. And now that the major components of Flex are free and open-source, the cost barrier is gone, as well!    Flex 3 in Action is an easy-to-follow, hands-on Flex tutorial. Chock-full of examples, this book goes beyond feature coverage and helps you put Flex to work in real day-to-day tasks. You'll quickly master the Flex API and learn to apply the techniques that make your Flex applications stand out from the crowd.    Interesting themes, styles, and skins  It's in there.  Working with databases  You got it.  Interactive forms and validation  You bet.  Charting techniques to help you visualize data  Bam!  The expert authors of Flex 3 in Action have one goal   to help you get down to business with Flex 3. Fast.    Many Flex books are overwhelming to new users   focusing on the complexities of the language and the super-specialized subjects in the Flex eco-system; Flex 3 in Action filters out the noise and dives into the core topics you need every day. Using numerous easy-to-understand examples, Flex 3 in Action gives you a strong foundation that you can build on as the complexity of your projects increases.",
+    "status" : "PUBLISH",
+    "authors" : [
+        "Tariq Ahmed with Jon Hirschi",
+        "Faisal Abid"
+    ],
+    "categories" : [
+        "Internet"
+    ]
+}
+{
+    "_id" : NumberInt(5),
+    "title" : "Flex 4 in Action",
+    "isbn" : "1935182420",
+    "pageCount" : NumberInt(600),
+    "publishedDate" : ISODate("2010-11-15T08:00:00.000+0000"),
+    "thumbnailUrl" : "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/ahmed2.jpg",
+    "longDescription" : "Using Flex, you can create high-quality, effective, and interactive Rich Internet Applications (RIAs) quickly and easily. Flex removes the complexity barrier from RIA development by offering sophisticated tools and a straightforward programming language so you can focus on what you want to do instead of how to do it. And the new features added in Flex 4 give you an even wider range of options!    Flex 4 in Action is an easy-to-follow, hands-on Flex tutorial that goes beyond feature coverage and helps you put Flex to work in real day-to-day tasks. You'll quickly master the Flex API and learn to apply the techniques that make your Flex applications stand out from the crowd.    The expert authors of Flex 4 in Action have one goal-to help you get down to business with Flex. Fast. Flex 4 in Action filters out the noise and dives into the core topics you need every day. Using numerous easy-to-understand examples, Flex 4 in Action gives you a strong foundation that you can build on as the complexity of your projects increases.    Interesting themes, styles, and skins  It's in there.  Working with databases  You got it.  Interactive forms and validation  You bet.  Charting techniques to help you visualize data  Bam!  And you'll get full coverage of these great Flex 4 upgrades:  Next generation Spark components-New buttons, form inputs, navigation controls and other visual components replace the Flex 3 \"Halo\" versions. Spark components are easier to customize, which makes skinning and theme design much faster  A new \"network monitor\" allows you to see the data communications between a Flex application and a backend server, which helps when trying to debug applications that are communicating to another system/service  Numerous productivity boosting features that speed up the process of creating applications  A faster compiler to take your human-written source code and convert it into a machine-readable format  Built-in support for unit testing allows you to improve the quality of your software, and reduce the time spent in testing",
+    "status" : "PUBLISH",
+    "authors" : [
+        "Tariq Ahmed",
+        "Dan Orlando",
+        "John C. Bland II",
+        "Joel Hooks"
+    ],
+    "categories" : [
+        "Internet"
+    ]
+}(...)
+
+//3- Listar todos os livros com categoria "Java"
+db.books.find({categories: "Java"},{categories:1, title:1})
+{
+    "_id" : NumberInt(2),
+    "title" : "Android in Action, Second Edition",
+    "categories" : [
+        "Java"
+    ]
+}
+{
+    "_id" : NumberInt(9),
+    "title" : "Griffon in Action",
+    "categories" : [
+        "Java"
+    ]
+}
+{
+    "_id" : NumberInt(10),
+    "title" : "OSGi in Depth",
+    "categories" : [
+        "Java"
+    ]
+}(...)
+
+//4- Livros que foram publicados após ISODate("2002-08-05T07:00:00.000+0000")
+db.books.find({publishedDate: {$gt: ISODate("2002-08-05T07:00:00.000+0000")}}, {_id:0, title:1, publishedDate:1})
+{
+    "title" : "Unlocking Android",
+    "publishedDate" : ISODate("2009-04-01T07:00:00.000+0000")
+}
+{
+    "title" : "Android in Action, Second Edition",
+    "publishedDate" : ISODate("2011-01-14T08:00:00.000+0000")
+}
+{
+    "title" : "Specification by Example",
+    "publishedDate" : ISODate("2011-06-03T07:00:00.000+0000")
+}
+{
+    "title" : "Flex 3 in Action",
+    "publishedDate" : ISODate("2009-02-02T08:00:00.000+0000")
+}(...)
+
+//5- Livros com auto chamado "Christian Bauer", do mais antigo para o mais recente
+db.books.find({authors: "Christian Bauer"}, {_id:0, title:1, authors:1, publishedDate:1}).sort({publishedDate:1})
+{
+    "title" : "Java Persistence with Hibernate, Second Edition",
+    "authors" : [
+        "Christian Bauer",
+        "Gavin King",
+        "",
+        "Gary Gregory"
+    ]
+}
+{
+    "title" : "Hibernate in Action (Chinese Edition)",
+    "publishedDate" : ISODate("1999-06-01T07:00:00.000+0000"),
+    "authors" : [
+        "Christian Bauer",
+        "Gavin King"
+    ]
+}(...)
+
+//6- Livros com categoria "Java" e nº de páginas igual a 450
+db.books.find({$and : [{categories: "Java"}, {pageCount : 450}]})
+{
+    "_id" : NumberInt(52),
+    "title" : "Spring Dynamic Modules in Action",
+    "isbn" : "1935182307",
+    "pageCount" : NumberInt(450),
+    "publishedDate" : ISODate("2010-09-04T07:00:00.000+0000"),
+    "thumbnailUrl" : "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/cogoluegnes.jpg",
+    "shortDescription" : "Spring Dynamic Modules in Action introduces Spring DM and OSGi to Java EE developers and architects. It presents the fundamental concepts of OSGi-based apps and maps them to the familiar ideas of the Spring framework. Then, it engages you with the techniques and concepts you'll need to develop stable, flexible enterprise apps. You'll learn how to embed a Spring container inside an OSGi bundle, and how Spring DM lets you blend Spring strengths like dependency injection with OSGi-based services. Along the way, you'll see how Spring DM handles data access and web-based components, and you'll explore topics like unit testing and configuration in an OSGi-based environment.",
+    "longDescription" : "OSGi is increasingly familiar to Java coders working in distributed environments, but the tools required to implement OSGi-based systems have been slow to develop. Spring Dynamic Modules (Spring DM) is a framework designed to make it easy to build Spring apps that take advantage of the OSGi approach to modular Java development. It simplifies the task of creating true component and service oriented architectures in an OSGi environment using all the powerful features of the Spring framework.    Spring Dynamic Modules in Action introduces Spring DM and OSGi to Java EE developers and architects. It presents the fundamental concepts of OSGi-based apps and maps them to the familiar ideas of the Spring framework. Then, it engages you with the techniques and concepts you'll need to develop stable, flexible enterprise apps. You'll learn how to embed a Spring container inside an OSGi bundle, and how Spring DM lets you blend Spring strengths like dependency injection with OSGi-based services. Along the way, you'll see how Spring DM handles data access and web-based components, and you'll explore topics like unit testing and configuration in an OSGi-based environment.",
+    "status" : "PUBLISH",
+    "authors" : [
+        "Arnaud Cogoluegnes",
+        "Thierry Templier",
+        "",
+        "Andy Piper"
+    ],
+    "categories" : [
+        "Java"
+    ]
+}
+{
+    "_id" : NumberInt(253),
+    "title" : "Lift in Action",
+    "isbn" : "1935182803",
+    "pageCount" : NumberInt(450),
+    "publishedDate" : ISODate("2011-11-18T08:00:00.000+0000"),
+    "thumbnailUrl" : "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/perrett.jpg",
+    "status" : "PUBLISH",
+    "authors" : [
+        "Timothy Perrett"
+    ],
+    "categories" : [
+        "Java"
+    ]
+}
+
+//Alínea D
+
+//1-Listar o nº de resultados de cada categoria
+db.books.aggregate([{$group:{ _id: "$categories", Total:{$sum: 1}}}])
+    "_id" : [
+        "Java",
+        "Software Development"
+    ],
+    "Total" : 1.0
+}
+{
+    "_id" : [
+        "Computer Graphics",
+        "Perl"
+    ],
+    "Total" : 1.0
+}
+{
+    "_id" : [
+        "Java",
+        "Business"
+    ],
+    "Total" : 1.0
+}(...)
+
+//2- Livros que têm a a categoria "Microsoft .NET" e status "PUBLISH"
+db.books.aggregate([{$match: {categories:"Microsoft", status: "PUBLISH"}}])
+{
+    "_id" : NumberInt(16),
+    "title" : "Brownfield Application Development in .NET",
+    "isbn" : "1933988711",
+    "pageCount" : NumberInt(550),
+    "publishedDate" : ISODate("2010-04-16T07:00:00.000+0000"),
+    "thumbnailUrl" : "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/baley.jpg",
+    "shortDescription" : "Brownfield Application Development in .Net shows you how to approach legacy applications with the state-of-the-art concepts, patterns, and tools you've learned to apply to new projects. Using an existing application as an example, this book guides you in applying the techniques and best practices you need to make it more maintainable and receptive to change.",
+    "longDescription" : "It's easy to get excited about building a new software project from scratch. So-called \"greenfield\" projects often involve learning new technology and the opportunity for experimentation. Working on established software projects may seem less glamorous.    Most software developers have inherited a monolithic application where the day-to-day tasks involve maintenance, incremental improvements, or even cleaning up the mess another programmer left behind. These legacy or brownfield projects often have tightly coupled components, low cohesion, and poor separation of concerns, making them fragile and resistant to change.    Brownfield Application Development in .Net shows you how to approach legacy applications with the state-of-the-art concepts, patterns, and tools you've learned to apply to new projects. Using an existing application as an example, this book guides you in applying the techniques and best practices you need to make it more maintainable and receptive to change.    Starting with the build process and the introduction of unit tests, the authors show you how to set up the application so that in later chapters, you can make incremental changes aimed at decoupling components from each other. Each practice introduced will increase your confidence and ability to make subsequent changes to your code.    As the book proceeds, the authors introduce frameworks and tools commonly used today while still approaching the subject from a conceptual level so that you can substitute alternate tools as appropriate. This book examines the reasons why a tool is necessary, not the tool itself. Because the book is based on the authors' experiences, Brownfield Application Development in .Net moves beyond the theories and shows you the techniques you need to be successful.",
+    "status" : "PUBLISH",
+    "authors" : [
+        "Kyle Baley",
+        "Donald Belcham"
+    ],
+    "categories" : [
+        "Microsoft"
+    ]
+}
+{
+    "_id" : NumberInt(53),
+    "title" : "SQL Server 2008 Administration in Action",
+    "isbn" : "193398872X",
+    "pageCount" : NumberInt(468),
+    "publishedDate" : ISODate("2009-08-01T07:00:00.000+0000"),
+    "thumbnailUrl" : "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/colledge.jpg",
+    "longDescription" : "The integrity and security of your database is crucial to your business. SQL Server 2008 is a massive and mature product with a very large feature set. As a SQL Server administrator, you must be equipped to handle myriad day-to-day tasks to keep your database healthy, and you must also be prepared to act quickly when something unexpected happens.    SQL Server 2008 Administration in Action offers over 100 DBA-tested, high-value, best practices that will help you tame the beast and keep it under control. Unlike the many comprehensive SQL Server reference tomes out there that attempt to cover the whole SQL Server feature set, this book drills down on the techniques, procedures, and practices that help you keep your database running like clockwork.    SQL Server 2008 Administration in Action focuses the production DBA, digging deep into the various tasks specific to that role. Expert author Rod Colledge--check him out at sqlCrunch.com--teaches you best practices that cover the lifecycle of a SQL Server system, including infrastructure design, installation, and operational maintenance. And while many of these techniques will work in any recent version of SQL Server, you'll find full coverage of emerging SQL Server 2008 best practices.    Each technique is presented in a task-driven style, and in the order of the typical life cycle of a SQL Server system. This allows you to easily open the book at the appropriate page and focus on what you need to know for each specific situation.",
+    "status" : "PUBLISH",
+    "authors" : [
+        "Rod Colledge"
+    ],
+    "categories" : [
+        "Microsoft"
+    ]
+}(...)
+
+//3- Listar os nomes dos livros e sua curta descrição
+db.books.aggregate([{$project: {title: 1, shortDescription: 1}}])
+{
+    "_id" : NumberInt(1),
+    "title" : "Unlocking Android",
+    "shortDescription" : "Unlocking Android: A Developer's Guide provides concise, hands-on instruction for the Android operating system and development tools. This book teaches important architectural concepts in a straightforward writing style and builds on this with practical and useful examples throughout."
+}
+{
+    "_id" : NumberInt(2),
+    "title" : "Android in Action, Second Edition",
+    "shortDescription" : "Android in Action, Second Edition is a comprehensive tutorial for Android developers. Taking you far beyond \"Hello Android,\" this fast-paced book puts you in the driver's seat as you learn important architectural concepts and implementation strategies. You'll master the SDK, build WebKit apps using HTML 5, and even learn to extend or replace Android's built-in features by building useful and intriguing examples. "
+}
+{
+    "_id" : NumberInt(3),
+    "title" : "Specification by Example"
+}
+{
+    "_id" : NumberInt(4),
+    "title" : "Flex 3 in Action"
+}(...) 
+
+//4- Ordenar os livros pela ordem decrescente do seu isbn(International Standard Book Number)
+db.books.aggregate( [ { $project : {isbn:1, title:1, _id:0}}, {$sort: {isbn:-1}} ] )
+{
+    "title" : "Android in Practice",
+    "isbn" : "9781935182924"
+}
+{
+    "title" : "The Engaging Web",
+    "isbn" : "9781935182078"
+}
+{
+    "title" : "SQL Server MVP Deep Dives",
+    "isbn" : "9781935182047"
+}
+{
+    "title" : "SQL Server MVP Deep Dives",
+    "isbn" : "9781935182047"
+}(...)
+
+//5- As 3 categorias mais populares
+db.books.aggregate([{$group:{ _id:"$categories", sum:{$sum:1}}},{$sort:{sum:-1}},{$limit:3}])
+{
+    "_id" : [
+
+    ],
+    "sum" : 160.0
+}
+{
+    "_id" : [
+        "Java"
+    ],
+    "sum" : 76.0
+}
+{
+    "_id" : [
+        "Microsoft .NET"
+    ],
+    "sum" : 33.0
+}
+
+//6- Os 10 autores menos populares
+db.books.aggregate([{$group:{ _id:"$authors", sum:{$sum:1}}},{$sort:{sum:1}},{$limit:10}])
+{
+    "_id" : [
+        "Nicolas G. Bevacqua"
+    ],
+    "sum" : 1.0
+}
+{
+    "_id" : [
+        "Henrik Brink",
+        "Joseph Richards"
+    ],
+    "sum" : 1.0
+}
+{
+    "_id" : [
+        "Bradley Austin Davis",
+        "Karen Bryla",
+        "",
+        "Alex Benton"
+    ],
+    "sum" : 1.0
+}
+{
+    "_id" : [
+        "Simon Holmes"
+    ],
+    "sum" : 1.0
+}
+{
+    "_id" : [
+        "Dimitri Aivaliotis"
+    ],
+    "sum" : 1.0
+}
+{
+    "_id" : [
+        "Cody Bumgardner"
+    ],
+    "sum" : 1.0
+}
+{
+    "_id" : [
+        "Joseph Hocking"
+    ],
+    "sum" : 1.0
+}
+{
+    "_id" : [
+        "Rick Umali"
+    ],
+    "sum" : 1.0
+}
+{
+    "_id" : [
+        "Avi Pfeffer"
+    ],
+    "sum" : 1.0
+}
+{
+    "_id" : [
+        "Bear Bibeault",
+        "Yehuda Katz",
+        "",
+        "Aurelio De Rosa"
+    ],
+    "sum" : 1.0
+}
+
+
+
+

@@ -1,0 +1,31 @@
+-- Criar uma key space
+CREATE KEYSPACE cbd WITH replication={'class':'SimpleStrategy', 'replication_factor':1} ;
+
+-- Criar uma tabela
+create table users(
+    id int,
+    name text,
+    nmec varint,
+    PRIMARY KEY ( id )
+);
+
+-- Inserir dados numa tabela
+insert into cbd.users (id, name, nmec) values(0, 'Vânia Morais', 102383);
+insert into cbd.users (id, name, nmec) values(1, 'Diogo Ferreira', 95741);
+insert into cbd.users (id, name, nmec) values(2, 'Margarida Fontes', 115743);
+insert into cbd.users (id, name, nmec) values(35, 'Tiago Magalhães', 555555);
+
+-- Mostrar a tabela
+select * from users;
+
+-- Apagar uma linha da tabela
+delete from cbd.users where id=35;
+
+-- Fazer update da linha
+update cbd.users set nmec=123456 where id=1;
+
+-- Apagar a tabela
+drop table cbd.users;
+
+
+

@@ -1,0 +1,142 @@
+[
+  {
+    "id_video": 1,
+    "utilizador": "catarina",
+    "data": "2022-12-04 19:44:26.610",
+    "tipo": "pause",
+    "video_data": "2022-12-04 19:44:26.610"
+  },
+  {
+    "id_video": 10,
+    "utilizador": "admin",
+    "data": "2022-12-04 19:44:26.686",
+    "tipo": "play",
+    "video_data": "2022-12-04 19:44:26.686"
+  },
+  {
+    "id_video": 3,
+    "utilizador": "catarina",
+    "data": "2022-12-04 19:44:26.590",
+    "tipo": "stop",
+    "video_data": "2022-12-04 19:44:26.590"
+  },
+  {
+    "id_video": 10,
+    "utilizador": "catarina",
+    "data": "2022-12-04 19:44:26.863",
+    "tipo": "pause",
+    "video_data": "2022-12-04 19:44:26.863"
+  },
+  {
+    "id_video": 10,
+    "utilizador": "catarina",
+    "data": "2022-12-04 19:44:26.693",
+    "tipo": "pause",
+    "video_data": "2022-12-04 19:44:26.693"
+  },
+  {
+    "id_video": 10,
+    "utilizador": "user",
+    "data": "2022-12-04 19:44:26.889",
+    "tipo": "stop",
+    "video_data": "2022-12-04 19:44:26.889"
+  },
+  {
+    "id_video": 8,
+    "utilizador": "vania",
+    "data": "2022-12-04 19:44:26.706",
+    "tipo": "stop",
+    "video_data": "2022-12-04 19:44:26.706"
+  },
+  {
+    "id_video": 8,
+    "utilizador": "jonny",
+    "data": "2022-12-04 19:44:26.742",
+    "tipo": "pause",
+    "video_data": "2022-12-04 19:44:26.743"
+  },
+  {
+    "id_video": 10,
+    "utilizador": "jonny",
+    "data": "2022-12-04 19:44:26.871",
+    "tipo": "play",
+    "video_data": "2022-12-04 19:44:26.871"
+  },
+  {
+    "id_video": 1,
+    "utilizador": "teresa",
+    "data": "2022-12-04 19:44:26.798",
+    "tipo": "stop",
+    "video_data": "2022-12-04 19:44:26.798"
+  },
+  {
+    "id_video": 5,
+    "utilizador": "teresa",
+    "data": "2022-12-04 19:44:26.773",
+    "tipo": "play",
+    "video_data": "2022-12-04 19:44:26.773"
+  },
+  {
+    "id_video": 1,
+    "utilizador": "vania",
+    "data": "2022-12-04 19:44:26.838",
+    "tipo": "pause",
+    "video_data": "2022-12-04 19:44:26.838"
+  },
+  {
+    "id_video": 1,
+    "utilizador": "vania",
+    "data": "2022-12-04 19:44:26.568",
+    "tipo": "play",
+    "video_data": "2022-12-04 19:44:26.568"
+  },
+  {
+    "id_video": 2,
+    "utilizador": "catarina",
+    "data": "2022-12-04 19:44:26.597",
+    "tipo": "stop",
+    "video_data": "2022-12-04 19:44:26.597"
+  },
+  {
+    "id_video": 3,
+    "utilizador": "vania",
+    "data": "2022-12-04 19:44:26.712",
+    "tipo": "play",
+    "video_data": "2022-12-04 19:44:26.712"
+  },
+  {
+    "id_video": 12,
+    "utilizador": "teresa",
+    "data": "2022-12-04 19:44:26.653",
+    "tipo": "stop",
+    "video_data": "2022-12-04 19:44:26.653"
+  },
+  {
+    "id_video": 12,
+    "utilizador": "teresa",
+    "data": "2022-12-04 19:44:26.644",
+    "tipo": "play",
+    "video_data": "2022-12-04 19:44:26.644"
+  },
+  {
+    "id_video": 1,
+    "utilizador": "jonny",
+    "data": "2022-12-04 19:44:26.781",
+    "tipo": "play",
+    "video_data": "2022-12-04 19:44:26.781"
+  },
+  {
+    "id_video": 1,
+    "utilizador": "jonny",
+    "data": "2022-12-04 19:44:26.603",
+    "tipo": "stop",
+    "video_data": "2022-12-04 19:44:26.603"
+  },
+  {
+    "id_video": 1,
+    "utilizador": "admin",
+    "data": "2022-12-04 19:44:26.807",
+    "tipo": "pause",
+    "video_data": "2022-12-04 19:44:26.807"
+  }
+]

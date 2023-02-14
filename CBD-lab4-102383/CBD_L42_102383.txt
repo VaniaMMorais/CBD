@@ -1,0 +1,401 @@
+// NMEC: 12345
+#1
+MATCH (actor:Person)-[:ACTED_IN]->(movie:Movie)<-[:DIRECTED]-(actor:Person) return  actor.name as actor, movie.title as movie
+╒════════════════╤═══════════════════╕
+│"actor"         │"movie"            │
+╞════════════════╪═══════════════════╡
+│"Tom Hanks"     │"That Thing You Do"│
+├────────────────┼───────────────────┤
+│"Clint Eastwood"│"Unforgiven"       │
+├────────────────┼───────────────────┤
+│"Danny DeVito"  │"Hoffa"            │
+└────────────────┴───────────────────┘
+
+#2
+match (actor:Person)-[:ACTED_IN]->(movie:Movie) where movie.released>2005 return actor.name as actor , movie.title as movie
+╒════════════════════════╤══════════════════════╕
+│"actor"                 │"movie"               │
+╞════════════════════════╪══════════════════════╡
+│"Zach Grenier"          │"RescueDawn"          │
+├────────────────────────┼──────────────────────┤
+│"Steve Zahn"            │"RescueDawn"          │
+├────────────────────────┼──────────────────────┤
+│"Christian Bale"        │"RescueDawn"          │
+├────────────────────────┼──────────────────────┤
+│"Marshall Bell"         │"RescueDawn"          │
+├────────────────────────┼──────────────────────┤
+│"Tom Hanks"             │"Cloud Atlas"         │
+├────────────────────────┼──────────────────────┤
+│"Jim Broadbent"         │"Cloud Atlas"         │
+├────────────────────────┼──────────────────────┤
+│"Halle Berry"           │"Cloud Atlas"         │
+├────────────────────────┼──────────────────────┤
+│"Hugo Weaving"          │"Cloud Atlas"         │
+├────────────────────────┼──────────────────────┤
+│"Tom Hanks"             │"The Da Vinci Code"   │
+├────────────────────────┼──────────────────────┤
+│"Ian McKellen"          │"The Da Vinci Code"   │
+├────────────────────────┼──────────────────────┤
+│"Audrey Tautou"         │"The Da Vinci Code"   │
+├────────────────────────┼──────────────────────┤
+│"Paul Bettany"          │"The Da Vinci Code"   │
+├────────────────────────┼──────────────────────┤
+│"John Hurt"             │"V for Vendetta"      │
+├────────────────────────┼──────────────────────┤
+│"Stephen Rea"           │"V for Vendetta"      │
+├────────────────────────┼──────────────────────┤
+│"Natalie Portman"       │"V for Vendetta"      │
+├────────────────────────┼──────────────────────┤
+│"Hugo Weaving"          │"V for Vendetta"      │
+├────────────────────────┼──────────────────────┤
+│"Ben Miles"             │"V for Vendetta"      │
+├────────────────────────┼──────────────────────┤
+
+
+#3
+match (n1)-[relations]-(n2) with n1,count(relations) as relations,n2 where relations > 1 return n1, relations, n2;
+╒══════════════════════════════════════════════════════════════════════╤═══════════╤══════════════════════════════════════════════════════════════════════╕
+│"n1"                                                                  │"relations"│"n2"                                                                  │
+╞══════════════════════════════════════════════════════════════════════╪═══════════╪══════════════════════════════════════════════════════════════════════╡
+│{"born":1961,"name":"Aaron Sorkin"}                                   │2          │{"tagline":"In the heart of the nation's capital, in a courthouse of t│
+│                                                                      │           │he U.S. government, one man will stop at nothing to keep his honor, an│
+│                                                                      │           │d one will stop at nothing to find the truth.","title":"A Few Good Men│
+│                                                                      │           │","released":1992}                                                    │
+├──────────────────────────────────────────────────────────────────────┼───────────┼──────────────────────────────────────────────────────────────────────┤
+│{"tagline":"In the heart of the nation's capital, in a courthouse of t│2          │{"born":1961,"name":"Aaron Sorkin"}                                   │
+│he U.S. government, one man will stop at nothing to keep his honor, an│           │                                                                      │
+│d one will stop at nothing to find the truth.","title":"A Few Good Men│           │                                                                      │
+│","released":1992}                                                    │           │                                                                      │
+├──────────────────────────────────────────────────────────────────────┼───────────┼──────────────────────────────────────────────────────────────────────┤
+│{"born":1957,"name":"Cameron Crowe"}                                  │3          │{"tagline":"The rest of his life begins now.","title":"Jerry Maguire",│
+│                                                                      │           │"released":2000}                                                      │
+├──────────────────────────────────────────────────────────────────────┼───────────┼──────────────────────────────────────────────────────────────────────┤
+│{"tagline":"The rest of his life begins now.","title":"Jerry Maguire",│3          │{"born":1957,"name":"Cameron Crowe"}                                  │
+│"released":2000}                                                      │           │                                                                      │
+├──────────────────────────────────────────────────────────────────────┼───────────┼──────────────────────────────────────────────────────────────────────┤
+│{"born":1947,"name":"Rob Reiner"}                                     │2          │{"tagline":"Can two friends sleep together and still love each other i│
+│                                                                      │           │n the morning?","title":"When Harry Met Sally","released":1998}       │
+├──────────────────────────────────────────────────────────────────────┼───────────┼──────────────────────────────────────────────────────────────────────┤
+
+
+#4
+match (person1:Person)-[:REVIEWED]->(movie:Movie)<-[:REVIEWED]-(person2:Person) return person1.name,movie.title,person2.name;
+╒══════════════════╤═══════════════════╤══════════════════╕
+│"person1"         │"movie"            │"person2"         │
+╞══════════════════╪═══════════════════╪══════════════════╡
+│"James Thompson"  │"The Replacements" │"Jessica Thompson"│
+├──────────────────┼───────────────────┼──────────────────┤
+│"Angela Scope"    │"The Replacements" │"Jessica Thompson"│
+├──────────────────┼───────────────────┼──────────────────┤
+│"Angela Scope"    │"The Replacements" │"James Thompson"  │
+├──────────────────┼───────────────────┼──────────────────┤
+│"Jessica Thompson"│"The Replacements" │"James Thompson"  │
+├──────────────────┼───────────────────┼──────────────────┤
+│"James Thompson"  │"The Replacements" │"Angela Scope"    │
+├──────────────────┼───────────────────┼──────────────────┤
+│"Jessica Thompson"│"The Replacements" │"Angela Scope"    │
+├──────────────────┼───────────────────┼──────────────────┤
+│"James Thompson"  │"The Da Vinci Code"│"Jessica Thompson"│
+├──────────────────┼───────────────────┼──────────────────┤
+│"Jessica Thompson"│"The Da Vinci Code"│"James Thompson"  │
+└──────────────────┴───────────────────┴──────────────────┘
+
+#5
+match (actor1:Person)-[:ACTED_IN]->(movie:Movie)<-[:ACTED_IN]-(actor2:Person) return actor1.name as actor1,movie.title as movie,actor2.name as actor2;
+╒════════════════════════╤═════════════════════════════════╤════════════════════════╕
+│"actor1"                │"movie"                          │"actor2"                │
+╞════════════════════════╪═════════════════════════════════╪════════════════════════╡
+│"Hugo Weaving"          │"The Matrix"                     │"Emil Eifrem"           │
+├────────────────────────┼─────────────────────────────────┼────────────────────────┤
+│"Laurence Fishburne"    │"The Matrix"                     │"Emil Eifrem"           │
+├────────────────────────┼─────────────────────────────────┼────────────────────────┤
+│"Carrie-Anne Moss"      │"The Matrix"                     │"Emil Eifrem"           │
+├────────────────────────┼─────────────────────────────────┼────────────────────────┤
+│"Keanu Reeves"          │"The Matrix"                     │"Emil Eifrem"           │
+├────────────────────────┼─────────────────────────────────┼────────────────────────┤
+│"Emil Eifrem"           │"The Matrix"                     │"Hugo Weaving"          │
+├────────────────────────┼─────────────────────────────────┼────────────────────────┤
+│"Laurence Fishburne"    │"The Matrix"                     │"Hugo Weaving"          │
+├────────────────────────┼─────────────────────────────────┼────────────────────────┤
+│"Carrie-Anne Moss"      │"The Matrix"                     │"Hugo Weaving"          │
+├────────────────────────┼─────────────────────────────────┼────────────────────────┤
+│"Keanu Reeves"          │"The Matrix"                     │"Hugo Weaving"          │
+├────────────────────────┼─────────────────────────────────┼────────────────────────┤
+│"Emil Eifrem"           │"The Matrix"                     │"Laurence Fishburne"    │
+├────────────────────────┼─────────────────────────────────┼────────────────────────┤
+
+#6
+match (actor:Person)-[:ACTED_IN]->(movie:Movie {title:"Apollo 13"}) return avg( movie.released-actor.born) as avg_age;
+╒═════════╕
+│"avg_age"│
+╞═════════╡
+│40.2     │
+└─────────┘
+
+#7
+match (actor:Person)-[:ACTED_IN]->(movie:Movie) return movie.title as movie, round(avg(movie.released-actor.born),2) as avg_age order by avg_age desc limit 10;
+╒════════════════════════╤═════════╕
+│"movie"                 │"avg_age"│
+╞════════════════════════╪═════════╡
+│"Unforgiven"            │62.0     │
+├────────────────────────┼─────────┤
+│"Cloud Atlas"           │54.25    │
+├────────────────────────┼─────────┤
+│"Something's Gotta Give"│54.0     │
+├────────────────────────┼─────────┤
+│"The Birdcage"          │50.33    │
+├────────────────────────┼─────────┤
+│"Frost/Nixon"           │49.4     │
+├────────────────────────┼─────────┤
+│"The Polar Express"     │48.0     │
+├────────────────────────┼─────────┤
+│"What Dreams May Come"  │48.0     │
+├────────────────────────┼─────────┤
+│"V for Vendetta"        │47.2     │
+├────────────────────────┼─────────┤
+│"RescueDawn"            │46.75    │
+├────────────────────────┼─────────┤
+│"Snow Falling on Cedars"│46.5     │
+└────────────────────────┴─────────┘
+
+#8
+match (actor:Person)-[:ACTED_IN]->(movie:Movie) with movie, avg(movie.released-actor.born) as avg_age order by avg_age limit 1
+match(actor:Person)-[:ACTED_IN]->(target) return distinct movie.title as movie, actor.name as actor
+╒═════════════╤════════════════════════╕
+│"movie"      │"actor"                 │
+╞═════════════╪════════════════════════╡
+│"Stand By Me"│"Keanu Reeves"          │
+├─────────────┼────────────────────────┤
+│"Stand By Me"│"Carrie-Anne Moss"      │
+├─────────────┼────────────────────────┤
+│"Stand By Me"│"Laurence Fishburne"    │
+├─────────────┼────────────────────────┤
+│"Stand By Me"│"Hugo Weaving"          │
+├─────────────┼────────────────────────┤
+│"Stand By Me"│"Emil Eifrem"           │
+├─────────────┼────────────────────────┤
+│"Stand By Me"│"Charlize Theron"       │
+├─────────────┼────────────────────────┤
+│"Stand By Me"│"Al Pacino"             │
+├─────────────┼────────────────────────┤
+│"Stand By Me"│"Tom Cruise"            │
+├─────────────┼────────────────────────┤
+│"Stand By Me"│"Jack Nicholson"        │
+├─────────────┼────────────────────────┤
+
+#9
+match (john: Person {name: 'John Cusack'}),  (demi: Person {name: 'Demi Moore'}), p = shortestPath((john)-[*]-(demi)) return p
+╒══════════════════════════════════════════════════════════════════════╕
+│"p"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│[{"born":1966,"name":"John Cusack"},{"roles":["Denny Lachance"]},{"tag│
+│line":"For some, it's the last real taste of innocence, and the first │
+│real taste of life. But for everyone, it's the time that memories are │
+│made of.","title":"Stand By Me","released":1986},{"tagline":"For some,│
+│ it's the last real taste of innocence, and the first real taste of li│
+│fe. But for everyone, it's the time that memories are made of.","title│
+│":"Stand By Me","released":1986},{},{"born":1947,"name":"Rob Reiner"},│
+│{"born":1947,"name":"Rob Reiner"},{},{"tagline":"In the heart of the n│
+│ation's capital, in a courthouse of the U.S. government, one man will │
+│stop at nothing to keep his honor, and one will stop at nothing to fin│
+│d the truth.","title":"A Few Good Men","released":1992},{"tagline":"In│
+│ the heart of the nation's capital, in a courthouse of the U.S. govern│
+│ment, one man will stop at nothing to keep his honor, and one will sto│
+│p at nothing to find the truth.","title":"A Few Good Men","released":1│
+│992},{"roles":["Lt. Cdr. JoAnne Galloway"]},{"born":1962,"name":"Demi │
+│Moore"}]                                                              │
+└──────────────────────────────────────────────────────────────────────┘
+
+#10
+match (keanu: Person {name: 'Keanu Reeves'}),  (tom: Person {name: 'Tom Cruise'}), p = shortestPath((keanu)-[*]-(tom)) return p, length(p) as dimension
+╒══════════════════════════════════════════════════════════════════════╤═══════════╕
+│"p"                                                                   │"dimention"│
+╞══════════════════════════════════════════════════════════════════════╪═══════════╡
+│[{"born":1964,"name":"Keanu Reeves"},{"roles":["Shane Falco"]},{"tagli│4          │
+│ne":"Pain heals, Chicks dig scars... Glory lasts forever","title":"The│           │
+│ Replacements","released":2000},{"tagline":"Pain heals, Chicks dig sca│           │
+│rs... Glory lasts forever","title":"The Replacements","released":2000}│           │
+│,{"summary":"Silly, but fun","rating":65},{"name":"Jessica Thompson"},│           │
+│{"name":"Jessica Thompson"},{"summary":"You had me at Jerry","rating":│           │
+│92},{"tagline":"The rest of his life begins now.","title":"Jerry Magui│           │
+│re","released":2000},{"tagline":"The rest of his life begins now.","ti│           │
+│tle":"Jerry Maguire","released":2000},{"roles":["Jerry Maguire"]},{"bo│           │
+│rn":1962,"name":"Tom Cruise"}]                                        │           │
+└──────────────────────────────────────────────────────────────────────┴───────────┘
+
+#11
+match (jim:Person),(kevin:Person), p = shortestPath((jim)-[*]-(kevin))
+where jim.name contains 'Jim' and kevin.name contains 'Kevin'
+return jim.name as Jim,length(p) as dimension,kevin.name as Kevin
+order by dimension asc
+╒═══════════════╤═══════════╤══════════════╕
+│"Jim"          │"dimension"│"Kevin"       │
+╞═══════════════╪═══════════╪══════════════╡
+│"Jim Cash"     │4          │"Kevin Bacon" │
+├───────────────┼───────────┼──────────────┤
+│"Jim Cash"     │4          │"Kevin Pollak"│
+├───────────────┼───────────┼──────────────┤
+│"Jim Broadbent"│4          │"Kevin Bacon" │
+├───────────────┼───────────┼──────────────┤
+│"Jim Broadbent"│6          │"Kevin Pollak"│
+└───────────────┴───────────┴──────────────┘
+
+#12
+match (jim:Person {name:'Jim Cash'}),(person:Person), p = shortestPath((jim)-[*0..2]-(person))
+where length(p)=2
+return jim.name as Jim ,length(p) as dimension, person.name as Person
+╒══════════╤═══════════╤═════════════════╕
+│"Jim"     │"dimension"│"Person"         │
+╞══════════╪═══════════╪═════════════════╡
+│"Jim Cash"│2          │"Tom Cruise"     │
+├──────────┼───────────┼─────────────────┤
+│"Jim Cash"│2          │"Kelly McGillis" │
+├──────────┼───────────┼─────────────────┤
+│"Jim Cash"│2          │"Val Kilmer"     │
+├──────────┼───────────┼─────────────────┤
+│"Jim Cash"│2          │"Anthony Edwards"│
+├──────────┼───────────┼─────────────────┤
+│"Jim Cash"│2          │"Tom Skerritt"   │
+├──────────┼───────────┼─────────────────┤
+│"Jim Cash"│2          │"Meg Ryan"       │
+├──────────┼───────────┼─────────────────┤
+│"Jim Cash"│2          │"Tony Scott"     │
+└──────────┴───────────┴─────────────────┘
+
+#13
+match (p1:Person),(kevin:Person {name: 'Kevin Bacon'}), p = shortestPath((p1)-[*]-(kevin))
+where p1 <> kevin
+return p1.name as Person,length(p) as dimension,kevin.name as Kevin
+order by dimension desc
+limit 1
+╒══════════════════╤═══════════╤═════════════╕
+│"Person"          │"dimension"│"Kevin"      │
+╞══════════════════╪═══════════╪═════════════╡
+│"Carrie-Anne Moss"│6          │"Kevin Bacon"│
+└──────────────────┴───────────┴─────────────┘
+
+#14
+match (person1:Person), (person2:Person), p = shortestPath((person1)-[*]-(person2))
+where person1 <> person2
+return person1.name as Person1,length(p) as dimension,person2.name as Person2
+order by dimension desc
+limit 1
+╒════════════════╤═══════════╤════════════════╕
+│"Person1"       │"dimension"│"Person2"       │
+╞════════════════╪═══════════╪════════════════╡
+│"Christian Bale"│10         │"Takeshi Kitano"│
+└────────────────┴───────────┴────────────────┘
+
+#15
+match (person1:Person),(person2:Person),p = shortestPath((person1)-[*]-(person2))
+where person1<>person2
+return length(p) as dimension, count(length(p)) as pairs 
+order by dimension asc
+╒═══════════╤═══════╕
+│"dimension"│"pairs"│
+╞═══════════╪═══════╡
+│1          │6      │
+├───────────┼───────┤
+│2          │1276   │
+├───────────┼───────┤
+│3          │114    │
+├───────────┼───────┤
+│4          │6248   │
+├───────────┼───────┤
+│5          │246    │
+├───────────┼───────┤
+│6          │8026   │
+├───────────┼───────┤
+│7          │22     │
+├───────────┼───────┤
+│8          │1610   │
+├───────────┼───────┤
+│10         │8      │
+└───────────┴───────┘
+
+#16
+match (person1:Person),(person2:Person),p = shortestPath((person1)-[ACTED_IN*]-(person2))
+where person1 <> person2
+return person1.name as Person1,avg(length(p)) as avg_dimension
+order by avg_dimension asc
+limit 10
+╒══════════════════╤══════════════════╕
+│"Person1"         │"avg_dimension"   │
+╞══════════════════╪══════════════════╡
+│"Tom Hanks"       │3.5075757575757565│
+├──────────────────┼──────────────────┤
+│"Jessica Thompson"│3.606060606060605 │
+├──────────────────┼──────────────────┤
+│"Cuba Gooding Jr."│3.9393939393939372│
+├──────────────────┼──────────────────┤
+│"Tom Cruise"      │3.9999999999999996│
+├──────────────────┼──────────────────┤
+│"Lana Wachowski"  │4.0               │
+├──────────────────┼──────────────────┤
+│"Lilly Wachowski" │4.0               │
+├──────────────────┼──────────────────┤
+│"Kevin Bacon"     │4.053030303030302 │
+├──────────────────┼──────────────────┤
+│"James Thompson"  │4.083333333333332 │
+├──────────────────┼──────────────────┤
+│"Hugo Weaving"    │4.166666666666668 │
+├──────────────────┼──────────────────┤
+│"Bonnie Hunt"     │4.212121212121213 │
+└──────────────────┴──────────────────┘
+
+#17
+match (actor: Person)-[a:ACTED_IN]->(movie:Movie)
+where a.roles starts with 'Dr.'
+return actor.name as Actor, movie.title as Movie, a.roles as Roles
+
+
+#18 Liste o titulo do filme em que participaram mais atores e o ano de lançamento 
+match (actor:Person)-[:ACTED_IN]->(movie:Movie)
+return movie.title as movie, count(actor) as num_actors, movie.released as release
+order by num_actors desc
+limit 1
+╒════════════════╤════════════╤═════════╕
+│"movie"         │"num_actors"│"release"│
+╞════════════════╪════════════╪═════════╡
+│"A Few Good Men"│12          │1992     │
+└────────────────┴────────────┴─────────┘
+
+#19 Liste todos os filemes que começam com 'The'
+match (actor:Person)-[:ACTED_IN]->(movie:Movie)
+where movie.title starts with 'The'
+return distinct movie.title as movie
+╒════════════════════════╕
+│"movie"                 │
+╞════════════════════════╡
+│"The Matrix"            │
+├────────────────────────┤
+│"The Matrix Reloaded"   │
+├────────────────────────┤
+│"The Matrix Revolutions"│
+├────────────────────────┤
+│"The Devil's Advocate"  │
+├────────────────────────┤
+│"The Replacements"      │
+├────────────────────────┤
+│"The Birdcage"          │
+├────────────────────────┤
+│"The Da Vinci Code"     │
+├────────────────────────┤
+│"The Green Mile"        │
+├────────────────────────┤
+│"The Polar Express"     │
+└────────────────────────┘
+
+#20 Indicar o actor mais velho e qual o 1º filme que fez
+match (actor:Person)-[r:ACTED_IN]->(movie:Movie)
+where movie.released-actor.born is not null
+return actor.name as Actor, movie.released-actor.born as Age, movie.released as First_movie
+order by movie.released-actor.born DESC
+limit 1
+╒═══════════════╤═════╤═════════════╕
+│"Actor"        │"Age"│"First_movie"│
+╞═══════════════╪═════╪═════════════╡
+│"Max von Sydow"│70   │1999         │
+└───────────────┴─────┴─────────────┘
+
+

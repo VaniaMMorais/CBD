@@ -1,0 +1,44 @@
+[
+  {
+    "username": "user",
+    "email": "user@ua.pt",
+    "data": "2022-12-04 18:58:54.838",
+    "id": "018b0d5a-684a-46d6-8e4f-dc0e4ef022fa",
+    "nome": "User"
+  },
+  {
+    "username": "catarina",
+    "email": "catarina@ua.pt",
+    "data": "2022-12-04 18:58:54.802",
+    "id": "53f5984c-bbbe-4246-8bc3-974e474b6929",
+    "nome": "Catarina Costa"
+  },
+  {
+    "username": "vania",
+    "email": "vania@ua.pt",
+    "data": "2022-12-04 18:58:54.736",
+    "id": "4c60c919-6eff-4f81-829c-9e2ce991f5fe",
+    "nome": "Vania Morais"
+  },
+  {
+    "username": "admin",
+    "email": "admin@ua.pt",
+    "data": "2022-12-04 18:58:54.817",
+    "id": "5c29f6f2-c193-4299-b8a4-01d8b6012ed0",
+    "nome": "Administrador"
+  },
+  {
+    "username": "jonny",
+    "email": "jonny@ua.pt",
+    "data": "2022-12-04 18:58:54.764",
+    "id": "e389d8e0-4006-4cab-9424-d0675aa5f321",
+    "nome": "João Sousa"
+  },
+  {
+    "username": "teresa",
+    "email": "teresa@ua.pt",
+    "data": "2022-12-04 18:58:54.787",
+    "id": "5422674d-2c3f-413b-a198-91eb09f03d57",
+    "nome": "Teresa Ferreira"
+  }
+]
