@@ -1,3 +1,5 @@
+# CBD - Lab201 - Vânia Morais
+
 >db.help()
 DB methods:
 	db.adminCommand(nameOrDocument) - switches to 'admin' db, and runs command [just calls db.runCommand(...)]
@@ -57,16 +59,28 @@ DB methods:
 	
 	
 > show dbs
-CBD     0.000GB
-Teste   0.000GB
-admin   0.000GB
-config  0.000GB
-local   0.000GB
+admin   32.00 KiB
+config  72.00 KiB
+local   32.00 KiB
 
 
->db.Collection.find({localidade : "Queens", gastronomia: "American"})
-*É-nos mostrada uma tabela com todos os restaurantes na localidade "Queens", que têm gastronomia "American"*
+>use CBD
+switched to db CBD
 
->var myCursor = db.Collection.find({localidade : "Queens", gastronomia: "American"});
-myCursor.forEach(printjson);
-*É-nos mostrado o mesmo conteúdo da tabela anterior, mas escrito em JSON*
+>db.stats()
+{
+    "db" : "CBD",
+    "collections" : 0.0,
+    "views" : 0.0,
+    "objects" : 0.0,
+    "avgObjSize" : 0.0,
+    "dataSize" : 0.0,
+    "storageSize" : 0.0,
+    "numExtents" : 0.0,
+    "indexes" : 0.0,
+    "indexSize" : 0.0,
+    "fileSize" : 0.0,
+    "fsUsedSize" : 0.0,
+    "fsTotalSize" : 0.0,
+    "ok" : 1.0
+}

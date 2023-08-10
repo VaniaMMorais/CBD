@@ -1,0 +1,305 @@
+{
+      "id": 0,
+      "nome": "Tom and Jerry",
+      "ano_lancamento": 1940,
+      "genero": ["Comédia", "Animação"],
+      "criador": ["William Hanna", "Joseph Barbera"],
+      "personagens": [
+        {
+          "nome": "Tom",
+          "tipo": "Gato"
+        },
+        {
+          "nome": "Jerry",
+          "tipo": "Rato"
+        }
+      ],
+      "avaliacao": 8.5,
+      "temporadas": 8
+    }
+    {
+      "id": 1,
+      "nome": "Scooby-Doo",
+      "ano_lancamento": 1969,
+      "genero": ["Mistério", "Animação"],
+      "criador": ["Joe Ruby", "Ken Spears"],
+      "personagens": [
+        {
+          "nome": "Scooby-Doo",
+          "tipo": "Cão"
+        },
+        {
+          "nome": "Salsicha",
+          "tipo": "Humano"
+        },
+        {
+          "nome": "Velma",
+          "tipo": "Humano"
+        },
+        {
+          "nome": "Fred",
+          "tipo": "Humano"
+        },
+        {
+          "nome": "Daphne",
+          "tipo": "Humano"
+        }
+      ],
+      "avaliacao": 7.8,
+      "temporadas": 3
+    }
+    {
+      "id": 2,
+      "nome": "Os Simpsons",
+      "ano_lancamento": 1989,
+      "genero": ["Comédia", "Animação"],
+      "criador": ["Matt Groening"],
+      "personagens": [
+        {
+          "nome": "Homer",
+          "tipo": "Humano"
+        },
+        {
+          "nome": "Marge",
+          "tipo": "Humano"
+        },
+        {
+          "nome": "Bart",
+          "tipo": "Humano"
+        },
+        {
+          "nome": "Lisa",
+          "tipo": "Humano"
+        },
+        {
+          "nome": "Maggie",
+          "tipo": "Humano"
+        }
+      ],
+      "avaliacao": 9.2,
+      "temporadas": 32
+    }
+    {
+      "id": 3,
+      "nome": "A Era do Gelo",
+      "ano_lancamento": 2002,
+      "genero": ["Aventura", "Animação"],
+      "criador": ["Chris Wedge", "Carlos Saldanha"],
+      "personagens": [
+        {
+          "nome": "Manny",
+          "tipo": "Mamute"
+        },
+        {
+          "nome": "Sid",
+          "tipo": "Preguiça"
+        },
+        {
+          "nome": "Diego",
+          "tipo": "Tigre-dente-de-sabre"
+        },
+        {
+          "nome": "Scrat",
+          "tipo": "Esquilo"
+        }
+      ],
+      "avaliacao": 7.6,
+      "temporadas": 1
+    }
+    {
+        "id": 4,
+        "nome": "Hora de Aventura",
+        "ano_lancamento": 2010,
+        "genero": ["Aventura", "Fantasia"],
+        "criador": ["Pendleton Ward"],
+        "personagens": [
+          {
+            "nome": "Finn",
+            "tipo": "Humano"
+          },
+          {
+            "nome": "Jake",
+            "tipo": "Cão Mágico"
+          },
+          {
+            "nome": "Princesa Jujuba",
+            "tipo": "Humano"
+          },
+          {
+            "nome": "Marceline",
+            "tipo": "Vampiro"
+          }
+        ],
+        "avaliacao": 8.6,
+        "temporadas": 10
+      }
+      {
+        "id": 5,
+        "nome": "Avatar: A Lenda de Aang",
+        "ano_lancamento": 2005,
+        "genero": ["Aventura", "Fantasia"],
+        "criador": ["Michael Dante DiMartino", "Bryan Konietzko"],
+        "personagens": [
+          {
+            "nome": "Aang",
+            "tipo": "Avatar"
+          },
+          {
+            "nome": "Katara",
+            "tipo": "Humano"
+          },
+          {
+            "nome": "Sokka",
+            "tipo": "Humano"
+          },
+          {
+            "nome": "Zuko",
+            "tipo": "Humano"
+          }
+        ],
+        "avaliacao": 9.2,
+        "temporadas": 3
+      }
+      {
+        "id": 6,
+        "nome": "Toy Story",
+        "ano_lancamento": 1995,
+        "genero": ["Animação", "Aventura"],
+        "criador": ["John Lasseter"],
+        "personagens": [
+          {
+            "nome": "Woody",
+            "tipo": "Boneco"
+          },
+          {
+            "nome": "Buzz Lightyear",
+            "tipo": "Boneco"
+          },
+          {
+            "nome": "Jessie",
+            "tipo": "Boneca"
+          },
+          {
+            "nome": "Sr. Cabeça de Batata",
+            "tipo": "Boneco"
+          }
+        ],
+        "avaliacao": 8.3,
+        "temporadas": 1
+      }
+      {
+        "id": 7,
+        "nome": "Rick and Morty",
+        "ano_lancamento": 2013,
+        "genero": ["Animação", "Ficção Científica"],
+        "criador": ["Justin Roiland", "Dan Harmon"],
+        "personagens": [
+          {
+            "nome": "Rick",
+            "tipo": "Cientista"
+          },
+          {
+            "nome": "Morty",
+            "tipo": "Humano"
+          },
+          {
+            "nome": "Summer",
+            "tipo": "Humano"
+          }
+        ],
+        "avaliacao": 9.2,
+        "temporadas": 6
+      }
+      {
+        "id": 8,
+        "nome": "Frozen",
+        "ano_lancamento": 2013,
+        "genero": ["Animação", "Aventura"],
+        "criador": ["Chris Buck", "Jennifer Lee"],
+        "personagens": [
+          {
+            "nome": "Elsa",
+            "tipo": "Humano"
+          },
+          {
+            "nome": "Anna",
+            "tipo": "Humano"
+          },
+          {
+            "nome": "Olaf",
+            "tipo": "Boneco de Neve"
+          }
+        ],
+        "avaliacao": 7.4,
+        "temporadas": 1
+      }
+      {
+        "id": 9,
+        "nome": "WALL·E",
+        "ano_lancamento": 2008,
+        "genero": ["Animação", "Aventura", "Ficção Científica"],
+        "criador": ["Andrew Stanton"],
+        "personagens": [
+          {
+            "nome": "WALL·E",
+            "tipo": "Robô"
+          },
+          {
+            "nome": "EVA",
+            "tipo": "Robô"
+          },
+          {
+            "nome": "M-O",
+            "tipo": "Robô"
+          }
+        ],
+        "avaliacao": 8.4,
+        "temporadas": 1
+      }
+      {
+        "id": 10,
+        "nome": "Moana",
+        "ano_lancamento": 2016,
+        "genero": ["Animação", "Aventura", "Fantasia"],
+        "criador": ["Ron Clements", "John Musker"],
+        "personagens": [
+          {
+            "nome": "Moana",
+            "tipo": "Humano"
+          },
+          {
+            "nome": "Maui",
+            "tipo": "Semideus"
+          },
+          {
+            "nome": "Tala",
+            "tipo": "Espírito"
+          }
+        ],
+        "avaliacao": 7.6,
+        "temporadas": 1
+      }
+      {
+        "id": 11,
+        "nome": "Ratatouille",
+        "ano_lancamento": 2007,
+        "genero": ["Animação", "Comédia", "Drama"],
+        "criador": ["Brad Bird", "Jan Pinkava"],
+        "personagens": [
+          {
+            "nome": "Remy",
+            "tipo": "Rato"
+          },
+          {
+            "nome": "Linguini",
+            "tipo": "Humano"
+          },
+          {
+            "nome": "Colette",
+            "tipo": "Humano"
+          }
+        ],
+        "avaliacao": 8.0,
+        "temporadas": 1
+      }
+  

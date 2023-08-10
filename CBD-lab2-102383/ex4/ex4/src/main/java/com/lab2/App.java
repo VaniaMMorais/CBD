@@ -43,7 +43,7 @@ public class App
         collection.insertOne(restaurant);
 
 
-        //edição de dados  TO DO: ACABAR ISTO (https://www.mongodb.com/developer/languages/java/java-setup-crud-operations/?utm_campaign=javainsertingdocuments&utm_source=facebook&utm_medium=organic_social#update-documents)
+        //edição de dados  
         Bson filter = eq("restaurant_id", "234427506");
         Bson updateOperation = set("restaurant_id", "234427577");
         UpdateResult updateResult = collection.updateOne(filter, updateOperation);
