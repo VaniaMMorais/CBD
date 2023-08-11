@@ -1,6 +1,9 @@
 -- Criar uma key space
 CREATE KEYSPACE cbd WITH replication={'class':'SimpleStrategy', 'replication_factor':1} ;
 
+-- Usar a key space
+USE cbd;
+
 -- Criar uma tabela
 create table users(
     id int,
