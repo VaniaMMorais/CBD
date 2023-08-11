@@ -31,4 +31,23 @@ update cbd.users set nmec=123456 where id=1;
 drop table cbd.users;
 
 
+-- Column Values - utilização de nested tuples, collections, etc:
+--     Aqui podemos criar colunas com dados mais complexos, como listas, tuplos e mapas. Exemplo:
+CREATE TABLE data (
+    id UUID PRIMARY KEY,
+    info tuple<text, int>,
+    emails list<text>,
+    addresses set<text>,
+    properties map<text, text>
+);
+
+--Time-to-Live e Timestamp:
+--    O TTL permite definir um tempo de vida para os dados de uma coluna. Já o timestamp serve para controlar quando uma coluna foi inserida ou atualizada. Exemplo:
+-- Inserir com TTL (duração de 1 hora)
+INSERT INTO data_with_ttl (id, value) VALUES (uuid(), 'some value') USING TTL 3600;
+
+-- Inserir com Timestamp
+INSERT INTO data_with_timestamp (id, value, timestamp_column) VALUES (uuid(), 'value', toTimestamp(now()));
+
+
 
