@@ -15,11 +15,11 @@ import javax.security.auth.callback.Callback;
 public class Query_1 {
     public static void main(String args[]){
         try{
-            CqlSession session = CqlSession.builder().withKeyspace("cbd_102383_ex2").build();
+            CqlSession session = CqlSession.builder().withKeyspace("cbd").build();
 
-            //odos os comentários (dos vídeos) que determinado utilizador está a seguir (following)
-            ResultSet res = session.execute("select * from videos_comentarios where id_video = 10 limit 3;");
-            System.out.println("Comentários feitos no vídeo com id= 10 (limite de 3): " );
+            //todos os comentários (dos vídeos) que determinado utilizador está a seguir (following)
+            ResultSet res = session.execute("SELECT * FROM comentarios_por_video WHERE video_id = 0a21e2ec-bc52-440e-9ad5-2b2f7c1b545e ORDER BY momento_temporal DESC LIMIT 3;");
+            System.out.println("Comentários feitos no vídeo com id= 0e127f7e-69bb-4324-8a71-48dbd75fe014 (limite de 3): " );
             for(Row row : res){
                 String comentario = row.getString("comentario");
                 String autor = row.getString("autor");

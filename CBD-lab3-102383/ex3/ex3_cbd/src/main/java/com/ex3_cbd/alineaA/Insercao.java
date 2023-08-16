@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Insercao {
     public static void main(String args[]){
         try{
-            CqlSession session = CqlSession.builder().withKeyspace("cbd_102383_ex2").build();
+            CqlSession session = CqlSession.builder().withKeyspace("cbd").build();
 
             Scanner sc = new Scanner(System.in);
 
@@ -32,8 +32,8 @@ public class Insercao {
             sc.close();
 
             //insert do utilizador
-            session.execute(SimpleStatement.builder("insert into utilizadores (id, username, nome, email, data) values (?, ?, ?, ?, toTimestamp(now()))")
-            .addPositionalValues(ID, username, email, nome)
+            session.execute(SimpleStatement.builder("INSERT INTO utilizadores (username, nome, email, selo_temporal) VALUES (?, ?, ?, toTimestamp(now()))")
+            .addPositionalValues(username, nome, email)
             .build());
 
             session.close();
