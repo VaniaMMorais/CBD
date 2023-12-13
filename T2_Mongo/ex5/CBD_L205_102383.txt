@@ -1,0 +1,680 @@
+O dataset foi feito por mim com dados que podem ou não sei realistas
+
+Estrutura do dataset:
+{
+      "id": 0,
+      "nome": "Tom and Jerry",
+      "ano_lancamento": 1940,
+      "genero": ["Comédia", "Animação"],
+      "criador": ["William Hanna", "Joseph Barbera"],
+      "personagens": [
+        {
+          "nome": "Tom",
+          "tipo": "Gato"
+        },
+        {
+          "nome": "Jerry",
+          "tipo": "Rato"
+        }
+      ],
+      "avaliacao": 8.5,
+      "temporadas": 8
+    }
+
+
+
+// Alínea C
+
+//1- Encontrar todos os cartoons com um número de temporadas superior a 5
+db.cartoons.find({"temporadas":{$gt:5}},{_id:0, nome:1, temporadas:1})
+{
+    "nome" : "Hora de Aventura",
+    "temporadas" : NumberInt(10)
+}
+{
+    "nome" : "Tom and Jerry",
+    "temporadas" : NumberInt(8)
+}
+{
+    "nome" : "Os Simpsons",
+    "temporadas" : NumberInt(32)
+}
+{
+    "nome" : "Rick and Morty",
+    "temporadas" : NumberInt(6)
+}
+
+//2- Cartoons que têm pelo menos uma personagem não humana
+db.cartoons.find({"personagens.tipo": { $ne: "Humano" }}, {_id:0, nome:1, personagens:1})
+{
+    "nome" : "A Era do Gelo",
+    "personagens" : [
+        {
+            "nome" : "Manny",
+            "tipo" : "Mamute"
+        },
+        {
+            "nome" : "Sid",
+            "tipo" : "Preguiça"
+        },
+        {
+            "nome" : "Diego",
+            "tipo" : "Tigre-dente-de-sabre"
+        },
+        {
+            "nome" : "Scrat",
+            "tipo" : "Esquilo"
+        }
+    ]
+}
+{
+    "nome" : "Tom and Jerry",
+    "personagens" : [
+        {
+            "nome" : "Tom",
+            "tipo" : "Gato"
+        },
+        {
+            "nome" : "Jerry",
+            "tipo" : "Rato"
+        }
+    ]
+}
+{
+    "nome" : "WALL·E",
+    "personagens" : [
+        {
+            "nome" : "WALL·E",
+            "tipo" : "Robô"
+        },
+        {
+            "nome" : "EVA",
+            "tipo" : "Robô"
+        },
+        {
+            "nome" : "M-O",
+            "tipo" : "Robô"
+        }
+    ]
+}
+{
+    "nome" : "Toy Story",
+    "personagens" : [
+        {
+            "nome" : "Woody",
+            "tipo" : "Boneco"
+        },
+        {
+            "nome" : "Buzz Lightyear",
+            "tipo" : "Boneco"
+        },
+        {
+            "nome" : "Jessie",
+            "tipo" : "Boneca"
+        },
+        {
+            "nome" : "Sr. Cabeça de Batata",
+            "tipo" : "Boneco"
+        }
+    ]
+}
+
+
+//3- Listar todos os cartoons com género "Comédia"
+db.cartoons.find({"genero": "Comédia"}, {_id:0, nome:1, genero:1})
+{
+    "nome" : "Tom and Jerry",
+    "genero" : [
+        "Comédia",
+        "Animação"
+    ]
+}
+{
+    "nome" : "Ratatouille",
+    "genero" : [
+        "Animação",
+        "Comédia",
+        "Drama"
+    ]
+}
+{
+    "nome" : "Os Simpsons",
+    "genero" : [
+        "Comédia",
+        "Animação"
+    ]
+}
+
+
+//4- Cartoons que têm o ano de lançamento anterior a 2000
+db.cartoons.find({"ano_lancamento": { $lt: 2000 }}, {_id:0, nome:1, ano_lancamento:1})
+{
+    "nome" : "Scooby-Doo",
+    "ano_lancamento" : NumberInt(1969)
+}
+{
+    "nome" : "Tom and Jerry",
+    "ano_lancamento" : NumberInt(1940)
+}
+{
+    "nome" : "Os Simpsons",
+    "ano_lancamento" : NumberInt(1989)
+}
+{
+    "nome" : "Toy Story",
+    "ano_lancamento" : NumberInt(1995)
+}
+
+
+//5-Cartoons com avaliação igual ou superior a 8.5, ordenado por ordem alfabética do nome
+db.cartoons.find({"avaliacao": { $gte: 8.5 }}).sort({"nome": 1})
+{
+    "_id" : ObjectId("64d4f9aa4a6524d7ea84302a"),
+    "id" : NumberInt(5),
+    "nome" : "Avatar: A Lenda de Aang",
+    "ano_lancamento" : NumberInt(2005),
+    "genero" : [
+        "Aventura",
+        "Fantasia"
+    ],
+    "criador" : [
+        "Michael Dante DiMartino",
+        "Bryan Konietzko"
+    ],
+    "personagens" : [
+        {
+            "nome" : "Aang",
+            "tipo" : "Avatar"
+        },
+        {
+            "nome" : "Katara",
+            "tipo" : "Humano"
+        },
+        {
+            "nome" : "Sokka",
+            "tipo" : "Humano"
+        },
+        {
+            "nome" : "Zuko",
+            "tipo" : "Humano"
+        }
+    ],
+    "avaliacao" : 9.2,
+    "temporadas" : NumberInt(3)
+}
+{
+    "_id" : ObjectId("64d4f9aa4a6524d7ea843028"),
+    "id" : NumberInt(4),
+    "nome" : "Hora de Aventura",
+    "ano_lancamento" : NumberInt(2010),
+    "genero" : [
+        "Aventura",
+        "Fantasia"
+    ],
+    "criador" : [
+        "Pendleton Ward"
+    ],
+    "personagens" : [
+        {
+            "nome" : "Finn",
+            "tipo" : "Humano"
+        },
+        {
+            "nome" : "Jake",
+            "tipo" : "Cão Mágico"
+        },
+        {
+            "nome" : "Princesa Jujuba",
+            "tipo" : "Humano"
+        },
+        {
+            "nome" : "Marceline",
+            "tipo" : "Vampiro"
+        }
+    ],
+    "avaliacao" : 8.6,
+    "temporadas" : NumberInt(10)
+}
+{
+    "_id" : ObjectId("64d4f9aa4a6524d7ea84302e"),
+    "id" : NumberInt(2),
+    "nome" : "Os Simpsons",
+    "ano_lancamento" : NumberInt(1989),
+    "genero" : [
+        "Comédia",
+        "Animação"
+    ],
+    "criador" : [
+        "Matt Groening"
+    ],
+    "personagens" : [
+        {
+            "nome" : "Homer",
+            "tipo" : "Humano"
+        },
+        {
+            "nome" : "Marge",
+            "tipo" : "Humano"
+        },
+        {
+            "nome" : "Bart",
+            "tipo" : "Humano"
+        },
+        {
+            "nome" : "Lisa",
+            "tipo" : "Humano"
+        },
+        {
+            "nome" : "Maggie",
+            "tipo" : "Humano"
+        }
+    ],
+    "avaliacao" : 9.2,
+    "temporadas" : NumberInt(32)
+}
+{
+    "_id" : ObjectId("64d4f9aa4a6524d7ea843031"),
+    "id" : NumberInt(7),
+    "nome" : "Rick and Morty",
+    "ano_lancamento" : NumberInt(2013),
+    "genero" : [
+        "Animação",
+        "Ficção Científica"
+    ],
+    "criador" : [
+        "Justin Roiland",
+        "Dan Harmon"
+    ],
+    "personagens" : [
+        {
+            "nome" : "Rick",
+            "tipo" : "Cientista"
+        },
+        {
+            "nome" : "Morty",
+            "tipo" : "Humano"
+        },
+        {
+            "nome" : "Summer",
+            "tipo" : "Humano"
+        }
+    ],
+    "avaliacao" : 9.2,
+    "temporadas" : NumberInt(6)
+}
+{
+    "_id" : ObjectId("64d4f9aa4a6524d7ea843029"),
+    "id" : NumberInt(0),
+    "nome" : "Tom and Jerry",
+    "ano_lancamento" : NumberInt(1940),
+    "genero" : [
+        "Comédia",
+        "Animação"
+    ],
+    "criador" : [
+        "William Hanna",
+        "Joseph Barbera"
+    ],
+    "personagens" : [
+        {
+            "nome" : "Tom",
+            "tipo" : "Gato"
+        },
+        {
+            "nome" : "Jerry",
+            "tipo" : "Rato"
+        }
+    ],
+    "avaliacao" : 8.5,
+    "temporadas" : NumberInt(8)
+}
+
+//6- Cartoons com genero igual a "Aventura" e com mais de 2 temporadas
+db.cartoons.find({"genero": "Aventura","temporadas": { $gte: 2 }})
+{
+    "_id" : ObjectId("64d4f9aa4a6524d7ea843028"),
+    "id" : NumberInt(4),
+    "nome" : "Hora de Aventura",
+    "ano_lancamento" : NumberInt(2010),
+    "genero" : [
+        "Aventura",
+        "Fantasia"
+    ],
+    "criador" : [
+        "Pendleton Ward"
+    ],
+    "personagens" : [
+        {
+            "nome" : "Finn",
+            "tipo" : "Humano"
+        },
+        {
+            "nome" : "Jake",
+            "tipo" : "Cão Mágico"
+        },
+        {
+            "nome" : "Princesa Jujuba",
+            "tipo" : "Humano"
+        },
+        {
+            "nome" : "Marceline",
+            "tipo" : "Vampiro"
+        }
+    ],
+    "avaliacao" : 8.6,
+    "temporadas" : NumberInt(10)
+}
+{
+    "_id" : ObjectId("64d4f9aa4a6524d7ea84302a"),
+    "id" : NumberInt(5),
+    "nome" : "Avatar: A Lenda de Aang",
+    "ano_lancamento" : NumberInt(2005),
+    "genero" : [
+        "Aventura",
+        "Fantasia"
+    ],
+    "criador" : [
+        "Michael Dante DiMartino",
+        "Bryan Konietzko"
+    ],
+    "personagens" : [
+        {
+            "nome" : "Aang",
+            "tipo" : "Avatar"
+        },
+        {
+            "nome" : "Katara",
+            "tipo" : "Humano"
+        },
+        {
+            "nome" : "Sokka",
+            "tipo" : "Humano"
+        },
+        {
+            "nome" : "Zuko",
+            "tipo" : "Humano"
+        }
+    ],
+    "avaliacao" : 9.2,
+    "temporadas" : NumberInt(3)
+}
+
+//Alínea D
+
+//1-Listar o nº de resultados de cada genero
+db.cartoons.aggregate([{$unwind: "$genero"},{$group: {_id: "$genero",count: { $sum: 1 }}}])
+// Aqui o $unwind desconstroi a lista de de generos para que não seja contada a lista e sim cada genero separado
+{
+    "_id" : "Drama",
+    "count" : 1.0
+}
+{
+    "_id" : "Ficção Científica",
+    "count" : 2.0
+}
+{
+    "_id" : "Comédia",
+    "count" : 3.0
+}
+{
+    "_id" : "Mistério",
+    "count" : 1.0
+}
+{
+    "_id" : "Animação",
+    "count" : 10.0
+}
+{
+    "_id" : "Fantasia",
+    "count" : 3.0
+}
+{
+    "_id" : "Aventura",
+    "count" : 7.0
+}
+
+//2- Quantas personagens tem cada cartoon
+db.cartoons.aggregate([{$project: {_id: 0,nome: 1,numero_personagens: { $size: "$personagens" }}}])
+{
+    "nome" : "A Era do Gelo",
+    "numero_personagens" : NumberInt(4)
+}
+{
+    "nome" : "Scooby-Doo",
+    "numero_personagens" : NumberInt(5)
+}
+{
+    "nome" : "Hora de Aventura",
+    "numero_personagens" : NumberInt(4)
+}
+{
+    "nome" : "Tom and Jerry",
+    "numero_personagens" : NumberInt(2)
+}
+{
+    "nome" : "Avatar: A Lenda de Aang",
+    "numero_personagens" : NumberInt(4)
+}
+{
+    "nome" : "Moana",
+    "numero_personagens" : NumberInt(3)
+}
+{
+    "nome" : "WALL·E",
+    "numero_personagens" : NumberInt(3)
+}
+{
+    "nome" : "Ratatouille",
+    "numero_personagens" : NumberInt(3)
+}
+{
+    "nome" : "Os Simpsons",
+    "numero_personagens" : NumberInt(5)
+}
+{
+    "nome" : "Toy Story",
+    "numero_personagens" : NumberInt(4)
+}
+{
+    "nome" : "Frozen",
+    "numero_personagens" : NumberInt(3)
+}
+{
+    "nome" : "Rick and Morty",
+    "numero_personagens" : NumberInt(3)
+}
+
+//3- Média da avaliação por genero 
+db.cartoons.aggregate([{$unwind: "$genero"},{$group: {_id: "$genero",media_avaliacao: { $avg: "$avaliacao" }}}])
+{
+    "_id" : "Drama",
+    "media_avaliacao" : 8.0
+}
+{
+    "_id" : "Ficção Científica",
+    "media_avaliacao" : 8.8
+}
+{
+    "_id" : "Comédia",
+    "media_avaliacao" : 8.566666666666666
+}
+{
+    "_id" : "Mistério",
+    "media_avaliacao" : 7.8
+}
+{
+    "_id" : "Animação",
+    "media_avaliacao" : 8.2
+}
+{
+    "_id" : "Fantasia",
+    "media_avaliacao" : 8.466666666666667
+}
+{
+    "_id" : "Aventura",
+    "media_avaliacao" : 8.157142857142857
+} 
+
+//4- Total de personagens por criador
+db.cartoons.aggregate([{$unwind: "$criador"},{$group: {_id: "$criador",personagens: { $addToSet: "$personagens" }}}])
+{
+    "_id" : "Justin Roiland",
+    "personagens" : [
+        [
+            {
+                "nome" : "Rick",
+                "tipo" : "Cientista"
+            },
+            {
+                "nome" : "Morty",
+                "tipo" : "Humano"
+            },
+            {
+                "nome" : "Summer",
+                "tipo" : "Humano"
+            }
+        ]
+    ]
+}
+{
+    "_id" : "Chris Buck",
+    "personagens" : [
+        [
+            {
+                "nome" : "Elsa",
+                "tipo" : "Humano"
+            },
+            {
+                "nome" : "Anna",
+                "tipo" : "Humano"
+            },
+            {
+                "nome" : "Olaf",
+                "tipo" : "Boneco de Neve"
+            }
+        ]
+    ]
+}
+{
+    "_id" : "John Lasseter",
+    "personagens" : [
+        [
+            {
+                "nome" : "Woody",
+                "tipo" : "Boneco"
+            },
+            {
+                "nome" : "Buzz Lightyear",
+                "tipo" : "Boneco"
+            },
+            {
+                "nome" : "Jessie",
+                "tipo" : "Boneca"
+            },
+            {
+                "nome" : "Sr. Cabeça de Batata",
+                "tipo" : "Boneco"
+            }
+        ]
+    ]
+}
+{
+    "_id" : "Jennifer Lee",
+    "personagens" : [
+        [
+            {
+                "nome" : "Elsa",
+                "tipo" : "Humano"
+            },
+            {
+                "nome" : "Anna",
+                "tipo" : "Humano"
+            },
+            {
+                "nome" : "Olaf",
+                "tipo" : "Boneco de Neve"
+            }
+        ]
+    ]
+}
+{
+    "_id" : "Matt Groening",
+    "personagens" : [
+        [
+            {
+                "nome" : "Homer",
+                "tipo" : "Humano"
+            },
+            {
+                "nome" : "Marge",
+                "tipo" : "Humano"
+            },
+            {
+                "nome" : "Bart",
+                "tipo" : "Humano"
+            },
+            {
+                "nome" : "Lisa",
+                "tipo" : "Humano"
+            },
+            {
+                "nome" : "Maggie",
+                "tipo" : "Humano"
+            }
+        ]
+    ]
+}(...)
+
+//5- Os 3 generos mais populares
+db.cartoons.aggregate([{$unwind: "$genero"},{$group: {_id: "$genero",total: { $sum: 1 }}},{$sort: { total: -1 }},{$limit: 3},{$project: {_id: 0,genero: "$_id",total: 1}}])
+{
+    "total" : 10.0,
+    "genero" : "Animação"
+}
+{
+    "total" : 7.0,
+    "genero" : "Aventura"
+}
+{
+    "total" : 3.0,
+    "genero" : "Fantasia"
+}
+
+//6- Personagens com o nome começado por "M"
+db.cartoons.aggregate([ {$unwind: "$personagens"},{$match: {"personagens.nome": /^M/i}},{$project: {_id: 0,nome_personagem: "$personagens.nome",cartoon: "$nome"}}])
+{
+    "nome_personagem" : "Manny",
+    "cartoon" : "A Era do Gelo"
+}
+{
+    "nome_personagem" : "Marceline",
+    "cartoon" : "Hora de Aventura"
+}
+{
+    "nome_personagem" : "Moana",
+    "cartoon" : "Moana"
+}
+{
+    "nome_personagem" : "Maui",
+    "cartoon" : "Moana"
+}
+{
+    "nome_personagem" : "M-O",
+    "cartoon" : "WALL·E"
+}
+{
+    "nome_personagem" : "Marge",
+    "cartoon" : "Os Simpsons"
+}
+{
+    "nome_personagem" : "Maggie",
+    "cartoon" : "Os Simpsons"
+}
+{
+    "nome_personagem" : "Morty",
+    "cartoon" : "Rick and Morty"
+}
+
+
+
+

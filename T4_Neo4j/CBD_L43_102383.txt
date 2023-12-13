@@ -1,0 +1,277 @@
+// Nmec: 102383
+
+a) Entidades: 
+	-User: svn_id, real_name e organization
+	-Project: project_name
+   Relações:
+   	-COMMITTED [User -> Project]: num e role_on_project
+   	
+b) Para importar o ficheiro, copiei o mesmo para a pasta import da base de dados que está a ser utilizada para o exercício, depois foram executados os seguintes comandos na interface http do Neoj4:
+
+LOAD CSV WITH HEADERS
+FROM "file:///git_selection.csv" AS Row
+MERGE (user:Member {svn_id: Row.svn_id})
+SET user.real_name=Row.real_name, user.organization=Row.organization
+MERGE (project:Project {project_name: Row.project_name})
+
+LOAD CSV WITH HEADERS
+FROM "file:///git_selection.csv" AS Row
+MATCH (user:Member {svn_id: Row.svn_id}),(project:Project {project_name:Row.project_name})
+CREATE (user)-[:COMMITTED {num: Row.num, role_on_project: Row.role_on_project}]->(project)
+
+c) 
+1- match (user:Member) return user.real_name as user, user.svn_id as svn_id, user.organization as organization;
+╒═══════════════════════════════════╤══════════════════════╤═════════════════════════════════╕
+│"user"                             │"svn_id"              │"organization"                   │
+╞═══════════════════════════════════╪══════════════════════╪═════════════════════════════════╡
+│"Aaron Mulder"                     │"aa0380"              │"IBM"                            │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Aaron Mulder"                     │"ammulder"            │"Chariot Solutions "             │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Aaron T. Myers"                   │"atm"                 │"Cloudera "                      │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Abe White"                        │"ab0625"              │"Oracle Corporation"             │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Abe White"                        │"ab0633"              │"Oracle Corporation"             │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Abe White"                        │"ab1632"              │"Oracle Corporation "            │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Abe White"                        │"ab1651"              │"Oracle Corporation "            │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Abe White"                        │"ab2578"              │"Oracle"                         │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Abraham Elmahrek"                 │"abe"                 │"Cloudera"                       │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Abraham Fine"                     │"afine"               │"Cloudera"                       │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"abrown"                           │"Army Brown"          │"The Apache Software Foundation" │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Achim Nierbeck"                   │"anierbeck"           │"Inovex"                         │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Adam Wojtuniak"                   │"ad1026"              │"Ericsson"                       │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Adam Wojtuniak"                   │"ad2049"              │"Ericsson"                       │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Adam Wojtuniak"                   │"ad0047"              │"Ericsson"                       │
+├───────────────────────────────────┼──────────────────────┼─────────────────────────────────┤
+│"Adrian Cole"                      │"adriancole"          │"Cloud Conscious"                │
+
+
+2- match (user:Member) return distinct user.real_name as user;
+╒═══════════════════════════════════╕
+│"user"                             │
+╞═══════════════════════════════════╡
+│"Aaron Mulder"                     │
+├───────────────────────────────────┤
+│"Aaron T. Myers"                   │
+├───────────────────────────────────┤
+│"Abe White"                        │
+├───────────────────────────────────┤
+│"Abraham Elmahrek"                 │
+├───────────────────────────────────┤
+│"Abraham Fine"                     │
+├───────────────────────────────────┤
+│"abrown"                           │
+├───────────────────────────────────┤
+│"Achim Nierbeck"                   │
+├───────────────────────────────────┤
+│"Adam Wojtuniak"                   │
+├───────────────────────────────────┤
+│"Adrian Cole"                      │
+├───────────────────────────────────┤
+
+
+3-match (user:Member)-[relation:COMMITTED]->(project:Project)
+with user, count(relation) as n_relations, project
+where n_relations>=1
+return project.project_name as project_name, n_relations;
+╒════════════════════════════╤═════════════╕
+│"project_name"              │"n_relations"│
+╞════════════════════════════╪═════════════╡
+│"Apache Geronimo"           │1            │
+├────────────────────────────┼─────────────┤
+│"Apache Geronimo"           │1            │
+├────────────────────────────┼─────────────┤
+│"Apache Geronimo"           │1            │
+├────────────────────────────┼─────────────┤
+│"Apache Geronimo"           │1            │
+├────────────────────────────┼─────────────┤
+│"Apache Geronimo"           │1            │
+├────────────────────────────┼─────────────┤
+│"Apache Geronimo"           │1            │
+├────────────────────────────┼─────────────┤
+│"Apache Geronimo"           │1            │
+├────────────────────────────┼─────────────┤
+│"Apache Geronimo"           │1            │
+├────────────────────────────┼─────────────┤
+│"Apache Geronimo"           │3            │
+├────────────────────────────┼─────────────┤
+
+
+4- match (user:Member)-[relation:COMMITTED]->(project:Project)
+return user.real_name as user, count(project) as n_projects;
+╒═══════════════════════════════════╤════════════╕
+│"user"                             │"n_projects"│
+╞═══════════════════════════════════╪════════════╡
+│"Hai Hong Xu"                      │3           │
+├───────────────────────────────────┼────────────┤
+│"Jarek Gawor"                      │11          │
+├───────────────────────────────────┼────────────┤
+│"Lin Quan Jiang 'Shawn'"           │3           │
+├───────────────────────────────────┼────────────┤
+│"David Blevins"                    │7           │
+├───────────────────────────────────┼────────────┤
+│"Vamsavardhana Reddy Chillakuru"   │4           │
+├───────────────────────────────────┼────────────┤
+│"Rick McGuire"                     │3           │
+├───────────────────────────────────┼────────────┤
+│"Christopher M. Cardona"           │3           │
+├───────────────────────────────────┼────────────┤
+│"David Jencks"                     │26          │
+├───────────────────────────────────┼────────────┤
+│"Guillaume Nodet"                  │24          │
+├───────────────────────────────────┼────────────┤
+
+
+5- match (user:Member)-[relation:COMMITTED]->(project:Project)
+return user.real_name as user, count(project) as n_projects order by  n_projects desc;
+╒═══════════════════════════════════╤════════════╕
+│"user"                             │"n_projects"│
+╞═══════════════════════════════════╪════════════╡
+│"James Strachan"                   │29          │
+├───────────────────────────────────┼────────────┤
+│"David Jencks"                     │26          │
+├───────────────────────────────────┼────────────┤
+│"Guillaume Nodet"                  │24          │
+├───────────────────────────────────┼────────────┤
+│"Geir Magnusson Jr."               │20          │
+├───────────────────────────────────┼────────────┤
+│"Daniel Rall"                      │20          │
+├───────────────────────────────────┼────────────┤
+│"Hiram Chirino"                    │19          │
+├───────────────────────────────────┼────────────┤
+│"Jean-Baptiste Onofre"             │19          │
+├───────────────────────────────────┼────────────┤
+│"Owen O'Malley"                    │18          │
+├───────────────────────────────────┼────────────┤
+│"Ioannis Canellos"                 │16          │
+├───────────────────────────────────┼────────────┤
+│"Devaraj Das"                      │16          │
+├───────────────────────────────────┼────────────┤
+│"Tom White"                        │16          │
+├───────────────────────────────────┼────────────┤
+
+
+6- match (user:Member)-[relation:COMMITTED]->(project:Project)
+return project.project_name as project, count(user) as n_members;
+╒══════════════════════════════╤═══════════╕
+│"project"                     │"n_members"│
+╞══════════════════════════════╪═══════════╡
+│"Apache Geronimo"             │117        │
+├──────────────────────────────┼───────────┤
+│"Geronimo"                    │42         │
+├──────────────────────────────┼───────────┤
+│"ActiveMQ"                    │82         │
+├──────────────────────────────┼───────────┤
+│"Apache ActiveMQ"             │27         │
+├──────────────────────────────┼───────────┤
+│"Apache Camel"                │87         │
+├──────────────────────────────┼───────────┤
+│"Camel"                       │52         │
+├──────────────────────────────┼───────────┤
+│"Apache Hadoop"               │186        │
+├──────────────────────────────┼───────────┤
+│"Hadoop"                      │75         │
+├──────────────────────────────┼───────────┤
+│"Apache OpenJPA"              │54         │
+├──────────────────────────────┼───────────┤
+
+
+7- match (user:Member)-[relation:COMMITTED]->(project:Project)
+with user, relation.role_on_project as role, project
+where role = "Committer" 
+return project.project_name as project, count(role) as n_commiters;
+╒══════════════════════════════╤═════════════╕
+│"project"                     │"n_commiters"│
+╞══════════════════════════════╪═════════════╡
+│"Apache Geronimo"             │87           │
+├──────────────────────────────┼─────────────┤
+│"ActiveMQ"                    │27           │
+├──────────────────────────────┼─────────────┤
+│"Apache ActiveMQ"             │27           │
+├──────────────────────────────┼─────────────┤
+│"Apache Camel"                │60           │
+├──────────────────────────────┼─────────────┤
+│"Apache Hadoop"               │116          │
+├──────────────────────────────┼─────────────┤
+│"Apache OpenJPA"              │38           │
+├──────────────────────────────┼─────────────┤
+│"Apache Karaf"                │14           │
+├──────────────────────────────┼─────────────┤
+│"Apache Whirr"                │13           │
+├──────────────────────────────┼─────────────┤
+│"Apache Commons HTTP Client"  │10           │
+├──────────────────────────────┼─────────────┤
+│"Apache Axiom"                │43           │
+├──────────────────────────────┼─────────────┤
+│"Apache Axis"                 │38           │
+├──────────────────────────────┼─────────────┤
+
+
+8- match (user1:Member)-[:COMMITTED]->(project:Project)<-[:COMMITTED]-(user2:Member)
+where user1.svn_id="atm" 
+return user1.real_name as user1, user2.real_name as user2, project.project_name as project;
+╒════════════════╤═════════════════════════╤═══════════════╕
+│"user1"         │"user2"                  │"project"      │
+╞════════════════╪═════════════════════════╪═══════════════╡
+│"Aaron T. Myers"│"Harsh J"                │"Apache Hadoop"│
+├────────────────┼─────────────────────────┼───────────────┤
+│"Aaron T. Myers"│"Dhruba Borthakur"       │"Apache Hadoop"│
+├────────────────┼─────────────────────────┼───────────────┤
+│"Aaron T. Myers"│"Jonathan Eagles"        │"Apache Hadoop"│
+├────────────────┼─────────────────────────┼───────────────┤
+│"Aaron T. Myers"│"Jonathan Eagles"        │"Apache Hadoop"│
+├────────────────┼─────────────────────────┼───────────────┤
+│"Aaron T. Myers"│"Konstantin Boudnik"     │"Apache Hadoop"│
+├────────────────┼─────────────────────────┼───────────────┤
+│"Aaron T. Myers"│"Tsz Wo (Nicholas) Sze"  │"Apache Hadoop"│
+├────────────────┼─────────────────────────┼───────────────┤
+│"Aaron T. Myers"│"Kihwal Lee"             │"Apache Hadoop"│
+├────────────────┼─────────────────────────┼───────────────┤
+│"Aaron T. Myers"│"Dhruba Borthakur"       │"Apache Hadoop"│
+├────────────────┼─────────────────────────┼───────────────┤
+│"Aaron T. Myers"│"Sanjay Radia"           │"Apache Hadoop"│
+├────────────────┼─────────────────────────┼───────────────┤
+│"Aaron T. Myers"│"Sharad Agarwal"         │"Apache Hadoop"│
+
+
+9- match (user1:Member)-[relation1:COMMITTED]->(project:Project)<-[relation2:COMMITTED]-(user2:Member)
+where user1.svn_id="atm" and relation1.role_on_project = "PMC" and relation2.role_on_project="Committer" 
+return user2.real_name as user2;
+╒═════════════════════════╕
+│"user2"                  │
+╞═════════════════════════╡
+│"Harsh J"                │
+├─────────────────────────┤
+│"Dhruba Borthakur"       │
+├─────────────────────────┤
+│"Jonathan Eagles"        │
+├─────────────────────────┤
+│"Konstantin Boudnik"     │
+├─────────────────────────┤
+│"Dhruba Borthakur"       │
+├─────────────────────────┤
+│"Sanjay Radia"           │
+├─────────────────────────┤
+│"Koji Noguchi"           │
+├─────────────────────────┤
+│"Boris Shkolnik"         │
+├─────────────────────────┤
+│"Amar Ramesh Kamat"      │
+├─────────────────────────┤
+│"Tanping Wang"           │
+├─────────────────────────┤
+│"Jakob Homan"            │
+├─────────────────────────┤
+
+

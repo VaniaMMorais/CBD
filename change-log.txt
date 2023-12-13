@@ -1,0 +1,2 @@
+No T2_Mongo, apenas o exercício 5 foi refeito.
+No T3_Cassandra, foram feitas alterações em todos os exercícios.

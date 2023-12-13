@@ -1,0 +1,283 @@
+// Nmec: 102383
+// Não foi possível ter o ficheiro .cvs na pasta, uma vez que era demasiado grande
+// link para o ficheiro cvs: https://www.kaggle.com/datasets/datasnaek/youtube-new?select=GBvideos.csv 
+Entidades: 
+    -Video: video_id, title, views, likes, dislikes, comment_count, description
+    -Author: authors_name (channel_title)
+
+Relações:
+    - PUBLISHED [Author->Video]: publish_time
+    - TRENDING [Author->Video]: trending_date
+
+
+
+
+
+LOAD CSV WITH HEADERS
+FROM "file:///GBvideos.csv" AS Row
+MERGE (video:VIDEO {video_id: Row.video_id})
+SET video.title=Row.title, video.views=Row.views, video.likes=Row.likes, video.dislikes=Row.dislikes,
+video.comment_count=Row.comment_count, video.description=Row.description
+MERGE (author:Author {authors_name:Row.channel_title})
+
+LOAD CSV WITH HEADERS
+FROM "file:///GBvideos.csv" AS Row
+MATCH (author:Author {authors_name:Row.channel_title}), (video:VIDEO {video_id: Row.video_id})
+CREATE (author)-[:PUBLISHED {publish_time: Row.publish_time}]->(video)
+
+LOAD CSV WITH HEADERS
+FROM "file:///GBvideos.csv" AS Row
+MATCH (author:Author {authors_name:Row.channel_title}), (video:VIDEO {video_id: Row.video_id})
+CREATE (author)-[:TRENDING {trending_date: Row.trending_date}]->(video)
+
+
+1. Retorne o titulo do video e o número de likes do mesmo 
+match (video: VIDEO) return video.title as title, video.likes as likes 
+╒══════════════════════════════════════════════════════════════════════╤═════════╕
+│"title"                                                               │"likes"  │
+╞══════════════════════════════════════════════════════════════════════╪═════════╡
+│"John Lewis Christmas Ad 2017 - #MozTheMonster"                       │"63875"  │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"Taylor Swift: …Ready for It? (Live) - SNL"                           │"35741"  │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"Eminem - Walk On Water (Audio) ft. Beyoncé"                          │"1044324"│
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"Goals from Salford City vs Class of 92 and Friends at The Peninsula S│"424"    │
+│tadium!"                                                              │         │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"Dashcam captures truck's near miss with child in Norway"             │"30"     │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"How My Relationship Started!"                                        │"52708"  │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"Ed Sheeran - Perfect (Official Music Video)"                         │"2584773"│
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"CHRISTMAS HAS GONE TO MY HEAD"                                       │"57309"  │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"Elbow - Golden Slumbers (John Lewis Advert 2017)"                    │"3684"   │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"Jennifer Lopez - Amor, Amor, Amor (Official Video) ft. Wisin"        │"329709" │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"CAN BABIES DO GYMNASTICS?  **World Record**"                         │"11530"  │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"TV Reporter Interviews Alleged Bank Robber, Then Helps Police Catch H│"1883"   │
+│im"                                                                   │         │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"Gucci Mane  - Curve (ft. The Weeknd)"                                │"65509"  │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"EXTREME GOLDEN TAN TRANSFORMATION"                                   │"11133"  │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"How To Dry a Shirt in 30 Seconds"                                    │"107524" │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"Attracting An Alpaca With An Accordion | Nowhere Else"               │"13757"  │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"Sam Smith surprises brides at their wedding! (At The BBC)"           │"39312"  │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"Camila Cabello - Havana (Vertical Video) ft. Young Thug"             │"369329" │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"When Someone Has A Crush on You | Lilly Singh"                       │"231376" │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+│"Taylor Swift - “New Year’s Day” Fan Performance"                     │"78820"  │
+├──────────────────────────────────────────────────────────────────────┼─────────┤
+
+2. Retorne o video com o maior número de views e qual o seu author
+match (author:Author)-[:PUBLISHED]->(video: VIDEO) 
+return video.title as title, video.views as views, author.authors_name as author  order by views desc limit 1
+╒═══════════════════╤═══════╤════════╕
+│"title"            │"views"│"author"│
+╞═══════════════════╪═══════╪════════╡
+│"Is Smash 4 Dying?"│"99976"│"ZeRo"  │
+└───────────────────┴───────┴────────┘
+
+3. Retorne o número de videos que cada autor tem 
+match (author:Author)-[:PUBLISHED]->(video: VIDEO) return author.authors_name as author, count(video) as n_videos
+╒══════════════════════════════════════════════╤══════════╕
+│"author"                                      │"n_videos"│
+╞══════════════════════════════════════════════╪══════════╡
+│"John Lewis"                                  │14        │
+├──────────────────────────────────────────────┼──────────┤
+│"Saturday Night Live"                         │206       │
+├──────────────────────────────────────────────┼──────────┤
+│"EminemVEVO"                                  │114       │
+├──────────────────────────────────────────────┼──────────┤
+│"Salford City Football Club"                  │14        │
+├──────────────────────────────────────────────┼──────────┤
+│"Cute Girl Videos"                            │1         │
+├──────────────────────────────────────────────┼──────────┤
+│"PointlessBlogVlogs"                          │78        │
+├──────────────────────────────────────────────┼──────────┤
+│"Ed Sheeran"                                  │64        │
+├──────────────────────────────────────────────┼──────────┤
+│"MoreZoella"                                  │47        │
+├──────────────────────────────────────────────┼──────────┤
+│"ElbowVEVO"                                   │13        │
+├──────────────────────────────────────────────┼──────────┤
+│"JenniferLopezVEVO"                           │33        │
+├──────────────────────────────────────────────┼──────────┤
+│"Nile Wilson"                                 │59        │
+├──────────────────────────────────────────────┼──────────┤
+│"Inside Edition"                              │44        │
+├──────────────────────────────────────────────┼──────────┤
+│"OfficialGucciMane"                           │12        │
+├──────────────────────────────────────────────┼──────────┤
+│"John Maclean"                                │25        │
+├──────────────────────────────────────────────┼──────────┤
+│"HowToBasic"                                  │41        │
+├──────────────────────────────────────────────┼──────────┤
+│"Good Mythical Morning"                       │11        │
+├──────────────────────────────────────────────┼──────────┤
+
+4. Retorne os videos que entraram em trending no dia "18.22.02"
+match (author:Author)-[relation:TRENDING]->(video: VIDEO)
+where  relation.trending_date = "18.22.02"
+return author.authors_name as author, video.title as title
+╒════════════════════════════════════════╤══════════════════════════════════════════════════════════════════════╕
+│"author"                                │"title"                                                               │
+╞════════════════════════════════════════╪══════════════════════════════════════════════════════════════════════╡
+│"Saturday Night Live"                   │"Natalie’s Rap 2 - SNL"                                               │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"EminemVEVO"                            │"Eminem - River ft. Ed Sheeran"                                       │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"PointlessBlogVlogs"                    │"3 COUNTRIES IN 24 HOURS [NO PLANNING]"                               │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"The Late Late Show with James Corden"  │"Drop the Mic w/ Helen Mirren"                                        │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"Atlantic Records"                      │"This is Me [Dave Aude Remix] (from The Greatest Showman Soundtrack)" │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"SiaVEVO"                               │"Sia, David Guetta & Afrojack - Helium (Sia vs. David Guetta & Afrojac│
+│                                        │k)"                                                                   │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"Simon's Cat"                           │"Head Over Heels (A Valentines Special) - Simon's Cat | BLACK & WHITE"│
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"RemyMaVEVO"                            │"Remy Ma - Melanin Magic (Pretty Brown) ft. Chris Brown"              │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"Life Noggin"                           │"How Long Will Our Monuments Last?"                                   │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"ThirtySecondsToMarsVEVO"               │"Thirty Seconds To Mars - Dangerous Night (Audio)"                    │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"20th Century Fox"                      │"Deadpool, Meet Cable"                                                │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"Zoella"                                │"January Favourites 2018 | Zoella"                                    │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"WIRED"                                 │"Why It's Almost Impossible to Do a Quintuple Jump | WIRED"           │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"MyHarto"                               │"Perks of Dating a Girl || Hannah Hart"                               │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"Taylor Swift"                          │"End Game - Behind The Scenes"                                        │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"TheEllenShow"                          │"'The Greatest Showman' Star Keala Takes the Stage"                   │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"WWE"                                   │"Ronda Rousey confronts Asuka, Alexa Bliss and Charlotte Flair: Royal │
+│                                        │Rumble 2018 (WWE Network)"                                            │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"Breakfast Club Power 105.1 FM"         │"Troy Ave Takes The Stand On The Breakfast Club, Talks '2 Legit 2 Quit│
+│                                        │', Street Cred + More"                                                │
+
+5. Retorne os 10 videos com mais likes publicados pelo "Taylor Swift"
+match (author:Author)-[:PUBLISHED]->(video: VIDEO)
+where  author.authors_name = "Taylor Swift"
+return distinct video.title as title, video.likes as likes order by likes desc limit 5
+╒═══════════════════════════════════════════════════════════════════╤═══════╕
+│"title"                                                            │"likes"│
+╞═══════════════════════════════════════════════════════════════════╪═══════╡
+│"The reputation Secret Sessions"                                   │"65867"│
+├───────────────────────────────────────────────────────────────────┼───────┤
+│"End Game - Behind The Scenes"                                     │"51560"│
+├───────────────────────────────────────────────────────────────────┼───────┤
+│"The Making of a Song: “Delicate” – watch more on Taylor Swift NOW"│"46970"│
+├───────────────────────────────────────────────────────────────────┼───────┤
+│"Taylor Swift's reputation Stadium Tour - Trailer"                 │"25406"│
+├───────────────────────────────────────────────────────────────────┼───────┤
+│"Taylor Swift - …Ready for It? (BloodPop® Remix) (Audio)"          │"22822"│
+└───────────────────────────────────────────────────────────────────┴───────┘
+
+6. Retorne a descrição dos videos com menos comentários
+match (video: VIDEO)
+return distinct video.title as title, video.description as description, video.comment_count as comment_count order by video.comment_count asc
+╒══════════════════════════════════════════════════════════════════════╤══════════════════════════════════════════════════════════════════════╤═══════════════╕
+│"title"                                                               │"description"                                                         │"comment_count"│
+╞══════════════════════════════════════════════════════════════════════╪══════════════════════════════════════════════════════════════════════╪═══════════════╡
+│"Every Kevin Spacey Joke from Difficult People"                       │"Watch Difficult People on Hulu now!! http://hulu.com/difficult-people│"0"            │
+│                                                                      │\nTell all your friends! \nOrder:\n1x03 - Pledge Week\n1x05 - Children│               │
+│                                                                      │'s Menu\n2x02 - Kessler Epstein Foundation\n2x09 - Cedar Cove\n2x10 - │               │
+│                                                                      │High Alert\n3x01 - Strike Rat"                                        │               │
+├──────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┼───────────────┤
+│"Bone on Labour HQ"                                                   │null                                                                  │"0"            │
+├──────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┼───────────────┤
+│"Post Malone - rockstar ft. 21 Savage (Official Audio)"               │"The #1 hit-single by Post Malone. rockstar featuring 21 Savage. Liste│"0"            │
+│                                                                      │n everywhere: https://PostMalone.lnk.to/rsYD\n\nFollow Post Malone:\nh│               │
+│                                                                      │ttp://www.postmalone.com\nhttps://twitter.com/postmalone\nhttps://inst│               │
+│                                                                      │agram.com/postmalone\nhttps://facebook.com/postmalone\nhttps://youtube│               │
+│                                                                      │.com/PostMaloneVEVO"                                                  │               │
+├──────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┼───────────────┤
+│"WWE Superstar Triple H Addresses Conor McGregor and Ronda Rousey Rumo│"Subscribe now for more! http://bit.ly/1NbomQa\nPaul 'Triple H' Levesq│"0"            │
+│urs | Good Morning Britain"                                           │ue joins Good Morning Britain to talk all things WWE and he also addre│               │
+│                                                                      │sses rumours concerning UFC giants, Conor McGregor and Ronda Rousey.\n│               │
+│                                                                      │\nBroadcast on 02/11/2017\n\nLike, follow and subscribe to Good Mornin│               │
+│                                                                      │g Britain!\n\nThe Good Morning Britain YouTube channel delivers you th│               │
+│                                                                      │e news that you’re waking up to in the morning. From exclusive intervi│               │
+│                                                                      │ews with some of the biggest names in politics and showbiz to heartwar│               │
+│                                                                      │ming human interest stories and unmissable watch again moments. \n\nJo│               │
+│                                                                      │in Susanna Reid, Piers Morgan, Ben Shephard, Kate Garraway, Charlotte │               │
+│                                                                      │Hawkins and Sean Fletcher every weekday on ITV from 6am.\n\nWebsite: h│               │
+│                                                                      │ttp://bit.ly/1GsZuha\nYouTube: http://bit.ly/1Ecy0g1\nFacebook: http:/│               │
+│                                                                      │/on.fb.me/1HEDRMb\nTwitter: http://bit.ly/1xdLqU3\n\nhttp://www.itv.co│               │
+│                                                                      │m"                                                                    │               │
+├──────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┼───────────────┤
+│"Warner Bros - Justice League B-Roll Footage"                         │"Behind the scenes footage at the making of Warner Bros / DC Films Jus│"0"            │
+│                                                                      │tice League"                                                          │               │
+├──────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┼───────────────┤
+
+7. Retorne o dia em que mais videos entraram em trending
+match (author:Author)-[relation:TRENDING]-(video:VIDEO) 
+with relation.trending_date as trending_date, count(video) as n_videos 
+return trending_date, n_videos 
+order by n_videos desc 
+limit 1;
+╒═══════════════╤══════════╕
+│"trending_date"│"n_videos"│
+╞═══════════════╪══════════╡
+│"17.26.11"     │200       │
+└───────────────┴──────────┘
+
+8. Retorne o nome dos autores do videos cujo titulo contem a palavra "Google"
+match (author:Author)-[relation:PUBLISHED]-(video:VIDEO) 
+where video.title contains "Google"
+return distinct author.authors_name as author, video.title as title
+╒════════════════════════════════════════╤══════════════════════════════════════════════════════════════════════╕
+│"author"                                │"title"                                                               │
+╞════════════════════════════════════════╪══════════════════════════════════════════════════════════════════════╡
+│"Marques Brownlee"                      │"Google Pixelbook: $1000 of Weird!"                                   │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"The Verge"                             │"Google Pixel Buds review"                                            │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"CS Dojo"                               │"Top 5 Programming Languages to Learn to Get a Job at Google, Facebook│
+│                                        │, Microsoft, etc."                                                    │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"Google"                                │"Datally: A new mobile data-saving app by Google."                    │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"The Tonight Show Starring Jimmy Fallon"│"Google Translate Songs with Kelly Clarkson"                          │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"Google Spotlight Stories"              │"360 Google Doodles/Spotlight Stories: Back to the Moon"              │
+├────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│"NBA on TNT"                            │"Inside the NBA: Google me, Chuck"                                    │
+└────────────────────────────────────────┴──────────────────────────────────────────────────────────────────────┘
+
+9. Retorn o nome dos autores cujos videos não têm deescrição 
+match (author:Author)-[:PUBLISHED]-(video:VIDEO) 
+where video.description = " "
+return distinct author.authors_name as author, video.title as title
+╒════════╤═══════════════════════════════╕
+│"author"│"title"                        │
+╞════════╪═══════════════════════════════╡
+│"Saint" │"Roberto Carlos vs France 1997"│
+└────────┴───────────────────────────────┘
+
+10. Retorne todos os videos com numero de views igual a "9815"
+match (author:Author)-[:PUBLISHED]-(video:VIDEO) 
+where video.views ="9815"
+return distinct author.authors_name as author, video.title as title
+╒══════════════════╤═════════════════════════════════════════════════════════╕
+│"author"          │"title"                                                  │
+╞══════════════════╪═════════════════════════════════════════════════════════╡
+│"Cute Girl Videos"│"Dashcam captures truck's near miss with child in Norway"│
+└──────────────────┴─────────────────────────────────────────────────────────┘
